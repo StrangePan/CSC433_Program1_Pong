@@ -4,7 +4,7 @@ using namespace std;
 
 int main( int argc, char *argv )
 {
-	cout << "Test";
-	cout << endl;
+	cout << "Test" << endl;
+
 	return 0;
 }
