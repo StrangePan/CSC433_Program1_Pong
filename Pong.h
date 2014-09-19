@@ -2,9 +2,9 @@
 #define _PONG_H_
 
 #include <iostream>
-#include <gl/freeglut.h>
-
 using namespace std;
+
+#include <gl/freeglut.h>
 
 class Pong
 {
