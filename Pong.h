@@ -15,6 +15,8 @@ class Pong
 		int wHeight;
 		int wTop;
 		int wLeft;
+		int vWidth;
+		int vHeight;
 		string wName;
 
 	public:

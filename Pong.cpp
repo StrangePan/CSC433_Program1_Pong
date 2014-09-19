@@ -1,21 +1,17 @@
 #include "Pong.h"
 
-const float White[]     = { 1.0, 1.0, 1.0 };
-
 Pong* Pong::instance;
-
-const float ViewplaneSize = 1000.0;
 
 Pong::Pong()
 {
-
 	instance = this;
-	wWidth = 400;
+	wWidth = 600;
 	wHeight = 300;
 	wTop = 50;
 	wLeft = 100;
+	vWidth = 600;
+	vHeight = 300;
 	wName = "Pong";
-
 }
 
 Pong::~Pong()
@@ -38,7 +34,7 @@ int Pong::run( int argc, char *argv[] )
     glutInitWindowPosition( this -> wLeft, this -> wTop );                  // initial window position
     glutCreateWindow( this -> wName.c_str() );                  // window title
 
-    glClearColor( 0.0, 0.0, 0.0, 1.0 );                 // use black for glClear command
+    glClearColor( 0, 0, 0, 1.0 );                 // use black for glClear command
 
     // callback routines
     glutDisplayFunc( *::display );                         // how to redisplay window
@@ -61,22 +57,28 @@ void Pong::display()
 	//clear the display and set backround to black
 	glClear( GL_COLOR_BUFFER_BIT );
 
-	glColor3fv( White );
+	glColor3f( 255, 255, 255 );
     glBegin( GL_LINES );
-        glVertex2f( 0, -1000 );
-        glVertex2f( 0, 1000 );
+        glVertex2i( 10, 10 );
+        glVertex2i( 10, vHeight-10 );
+    glEnd();
+	
+	glColor3f( 255, 255, 255 );
+    glBegin( GL_LINES );
+        glVertex2i( 10, vHeight-10 );
+        glVertex2i( vWidth-10, vHeight-10 );
+    glEnd();
+	
+	glColor3f( 255, 255, 255 );
+    glBegin( GL_LINES );
+        glVertex2i( vWidth-10, vHeight-10 );
+        glVertex2i( vWidth-10, 10 );
     glEnd();
 
-	glColor3fv( White );
+	glColor3f( 255, 255, 255 );
     glBegin( GL_LINES );
-        glVertex2f( -1000, -1000 );
-        glVertex2f( 1000, -1000 );
-    glEnd();
-
-	glColor3fv( White );
-    glBegin( GL_LINES );
-        glVertex2f( -1000, 999 );
-        glVertex2f( 1000, 999 );
+        glVertex2i( 10, 10 );
+        glVertex2i( vWidth-10, 10 );
     glEnd();
 
 	// flush graphical output
@@ -94,9 +96,11 @@ void Pong::reshape(int w, int h)
     glMatrixMode( GL_PROJECTION );      // use an orthographic projection
     glLoadIdentity();                   // initialize transformation matrix
     if ( w > h )                        // use width:height aspect ratio to specify view extents
-        gluOrtho2D( -ViewplaneSize * w / h, ViewplaneSize * w / h, -ViewplaneSize, ViewplaneSize );
+		gluOrtho2D(0, vWidth, 0, vHeight);
+	    // gluOrtho2D( -vWidth * w / h, vWidth * w / h, -vHeight, vHeight );
     else
-        gluOrtho2D( -ViewplaneSize, ViewplaneSize, -ViewplaneSize * h / w, ViewplaneSize * h / w );
+        gluOrtho2D( 0, vWidth, 0, vHeight );
+		// gluOrtho2D( -vWidth, vWidth, -vHeight * h / w, vHeight * h / w );
     glViewport( 0, 0, w, h );           // adjust viewport to new window
 
     // switch back to (default) model view mode, for transformations
