@@ -1,10 +1,17 @@
 #include "Pong.h"
 
-void initOpenGL();
+Pong* Pong::instance;
 
 Pong::Pong()
 {
+
 	instance = this;
+	wWidth = 400;
+	wHeight = 300;
+	wTop = 50;
+	wLeft = 100;
+	wName = "Pong";
+
 }
 
 Pong::~Pong()
@@ -24,7 +31,7 @@ int Pong::run( int argc, char *argv[] )
     glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE );     // 32-bit graphics and single buffering
 
     glutInitWindowSize( this -> wWidth, this -> wHeight);    // initial window size
-    glutInitWindowPosition( this -> wLeft, this -> wHeight );                  // initial window position
+    glutInitWindowPosition( this -> wLeft, this -> wTop );                  // initial window position
     glutCreateWindow( this -> wName.c_str() );                  // window title
 
     glClearColor( 0.0, 0.0, 0.0, 1.0 );                 // use black for glClear command

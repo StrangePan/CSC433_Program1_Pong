@@ -11,11 +11,11 @@ class Pong
 {
 	private:
 		static Pong* instance;
-		int wWidth = 400;
-		int wHeight = 300;
-		int wTop = 50;
-		int wLeft = 100;
-		string wName = "Pong";
+		int wWidth;
+		int wHeight;
+		int wTop;
+		int wLeft;
+		string wName;
 
 	public:
 		Pong ( );
