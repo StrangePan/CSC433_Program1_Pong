@@ -1,13 +1,10 @@
-#ifndef __PONG__H__
-#define __PONG__H__
-
+#ifndef _PONG_H_
+#define _PONG_H_
 
 #include <iostream>
 #include <gl/freeglut.h>
-#include "Pong.cpp"
+
 using namespace std;
-
-
 
 class Pong
 {
@@ -16,16 +13,9 @@ class Pong
 
 		~Pong ( void );
 
-		void init ( );
+		int run ( );
 
 
-}
-
-
-
-
-
-
-
+};
 
 #endif

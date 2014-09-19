@@ -1,12 +1,7 @@
-#include <iostream>
-
-using namespace std;
+#include "Pong.h"
 
 int main( int argc, char *argv )
 {
-	//cout << "Test" << endl;
-
-
-
-	return 0;
+	Pong pong;
+	return pong.run();
 }
