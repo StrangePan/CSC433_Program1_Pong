@@ -57,28 +57,35 @@ void Pong::display()
 	//clear the display and set backround to black
 	glClear( GL_COLOR_BUFFER_BIT );
 
-	glColor3f( 255, 255, 255 );
+	glColor3f( 1.0, 1.0, 1.0 );
     glBegin( GL_LINES );
         glVertex2i( 10, 10 );
         glVertex2i( 10, vHeight-10 );
     glEnd();
-	
-	glColor3f( 255, 255, 255 );
+
     glBegin( GL_LINES );
         glVertex2i( 10, vHeight-10 );
         glVertex2i( vWidth-10, vHeight-10 );
     glEnd();
-	
-	glColor3f( 255, 255, 255 );
-    glBegin( GL_LINES );
+    
+	glBegin( GL_LINES );
         glVertex2i( vWidth-10, vHeight-10 );
+        glVertex2i( vWidth-10, 10 );
+    glEnd();
+    
+	glBegin( GL_LINES );
+        glVertex2i( 10, 10 );
         glVertex2i( vWidth-10, 10 );
     glEnd();
 
-	glColor3f( 255, 255, 255 );
-    glBegin( GL_LINES );
-        glVertex2i( 10, 10 );
-        glVertex2i( vWidth-10, 10 );
+	glBegin( GL_LINES );
+        glVertex2i( -1000, vHeight / 2 );
+        glVertex2i( vWidth + 1000, vHeight / 2 );
+    glEnd();
+
+	glBegin( GL_LINES );
+        glVertex2i( vWidth / 2, -1000 );
+        glVertex2i( vWidth / 2, vHeight + 1000 );
     glEnd();
 
 	// flush graphical output
@@ -91,16 +98,22 @@ void Pong::reshape(int w, int h)
 	// store new window dimensions globally
     wWidth = w;
     wHeight = h;
+	double ratio = (double) vWidth / (double) vHeight;
+	double scale;
 
     // orthographic projection of 3-D scene onto 2-D, maintaining aspect ratio
     glMatrixMode( GL_PROJECTION );      // use an orthographic projection
     glLoadIdentity();                   // initialize transformation matrix
-    if ( w > h )                        // use width:height aspect ratio to specify view extents
-		gluOrtho2D(0, vWidth, 0, vHeight);
-	    // gluOrtho2D( -vWidth * w / h, vWidth * w / h, -vHeight, vHeight );
-    else
-        gluOrtho2D( 0, vWidth, 0, vHeight );
-		// gluOrtho2D( -vWidth, vWidth, -vHeight * h / w, vHeight * h / w );
+	if (w > h * ratio)                  // use width:height aspect ratio to specify view extents
+	{
+		scale = (double) h / (double) vHeight;
+		gluOrtho2D( 0 - ((w / scale) - vWidth) / 2, vWidth + ((w / scale) - vWidth) / 2, 0, vHeight );
+	}
+	else
+	{
+		scale = (double) w / (double) vWidth;
+		gluOrtho2D( 0, vWidth, 0 - ((h / scale) - vHeight) / 2, vHeight + ((h / scale) - vHeight) / 2 );
+	}
     glViewport( 0, 0, w, h );           // adjust viewport to new window
 
     // switch back to (default) model view mode, for transformations
