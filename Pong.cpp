@@ -2,17 +2,8 @@
 
 Pong* Pong::instance;
 
-Pong::Pong()
-{
-	instance = this;
-	wWidth = 600;
-	wHeight = 300;
-	wTop = 50;
-	wLeft = 100;
-	vWidth = 600;
-	vHeight = 300;
-	wName = "Pong";
-}
+Pong::Pong() : wWidth(600), wHeight(300), wTop(50), wLeft(100), vWidth(600), vHeight(300), wName("Pong")
+{ }
 
 Pong::~Pong()
 { }
@@ -20,6 +11,25 @@ Pong::~Pong()
 Pong* Pong::getInstance()
 {
 	return instance;
+}
+
+void Pong::drawObject(Drawable* obj)
+{
+	for (Drawable* d : this->drawables)
+	{
+		if (d == obj) return;
+	}
+	this->drawables.push_back(obj);
+}
+
+void Pong::stopDrawingObject(Drawable* obj)
+{
+	this->drawables.remove(obj);
+}
+
+void Pong::stopDrawingAll()
+{
+	this->drawables.clear();
 }
 
 int Pong::run( int argc, char *argv[] )
@@ -87,6 +97,12 @@ void Pong::display()
         glVertex2i( vWidth / 2, -1000 );
         glVertex2i( vWidth / 2, vHeight + 1000 );
     glEnd();
+
+	// Draw all registered drawables
+	for (Drawable* d : this->drawables)
+	{
+		d->draw();
+	}
 
 	// flush graphical output
     glutSwapBuffers();

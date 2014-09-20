@@ -3,9 +3,12 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
-
+#include <list>
 #include <gl/freeglut.h>
+
+#include "Drawable.h"
+
+using namespace std;
 
 class Pong
 {
@@ -18,19 +21,23 @@ class Pong
 		int vWidth;
 		int vHeight;
 		string wName;
+		list<Drawable*> drawables;
 
 	public:
 		Pong ( );
 		~Pong ( void );
 		static Pong* getInstance( );
 		int run ( int argc, char *argv[] );
+
+		void drawObject(Drawable* obj);
+		void stopDrawingObject(Drawable* obj);
+		void stopDrawingAll();
 		
 		void display();
 		void reshape( int w, int h );
 		void keyboard( unsigned char key, int x, int y );
 		void mouseclick( int button, int state, int x, int y );
 		void idle();
-
 
 };
 
