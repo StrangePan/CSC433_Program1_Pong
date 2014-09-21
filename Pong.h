@@ -1,31 +1,34 @@
 #ifndef _PONG_H_
 #define _PONG_H_
 
-#include <iostream>
+class Pong;
+
+using namespace std;
+
 #include <string>
+#include <map>
 #include <list>
 #include <gl/freeglut.h>
 
-#include "Drawable.h"
 #include "PongGame.h"
-
-using namespace std;
+#include "Drawable.h"
 
 class Pong
 {
 	private:
 		static Pong* instance;
-		int wWidth;
-		int wHeight;
-		int wTop;
-		int wLeft;
-		int vWidth;
-		int vHeight;
-		string wName;
-		list<Drawable*> drawables;
-		PongGame game;
+		int view_width;
+		int view_height;
+		int window_width;
+		int window_height;
+		string window_name;
+		
+		PongGame* game;
+		map<int, list<Drawable*>> drawables;
 
 	public:
+		static const int unit;
+
 		Pong ( );
 		~Pong ( void );
 
@@ -33,9 +36,12 @@ class Pong
 		int run ( int argc, char *argv[] );
 		PongGame* getGame();
 
-		void drawObject(Drawable* obj);
+		void drawObject(Drawable* obj, int layer = 0);
+		void setDrawingLayer(Drawable* obj, int layer);
 		void stopDrawingObject(Drawable* obj);
 		void stopDrawingAll();
+		bool isDrawingObject(Drawable* obj);
+		int getDrawingLayer(Drawable* obj);
 
 		int getViewWidth();
 		int getViewHeight();

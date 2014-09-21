@@ -1,16 +1,17 @@
 #ifndef _PONGGAME_H_
 #define _PONGGAME_H_
 
+class PongGame;
+
 #include <list>
+#include "Pong.h"
 #include "Board.h"
-#include "Ball.h"
 #include "Paddle.h"
+#include "Ball.h"
 
 class PongGame
 {
 	private:
-		const int unit;
-
 		bool game_active;
 		bool game_paused;
 		int p1_score;
