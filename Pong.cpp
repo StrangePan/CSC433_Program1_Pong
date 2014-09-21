@@ -13,6 +13,11 @@ Pong* Pong::getInstance()
 	return instance;
 }
 
+PongGame* Pong::getGame()
+{
+	return &game;
+}
+
 void Pong::drawObject(Drawable* obj)
 {
 	for (Drawable* d : this->drawables)
@@ -40,9 +45,9 @@ int Pong::run( int argc, char *argv[] )
 
     glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE );     // 32-bit graphics and single buffering
 
-    glutInitWindowSize( this -> wWidth, this -> wHeight);    // initial window size
-    glutInitWindowPosition( this -> wLeft, this -> wTop );                  // initial window position
-    glutCreateWindow( this -> wName.c_str() );                  // window title
+    glutInitWindowSize( wWidth, wHeight);    // initial window size
+    glutInitWindowPosition( wLeft, wTop );                  // initial window position
+    glutCreateWindow( wName.c_str() );                  // window title
 
     glClearColor( 0, 0, 0, 1.0 );                 // use black for glClear command
 
@@ -66,38 +71,8 @@ void Pong::display()
 {
 	//clear the display and set backround to black
 	glClear( GL_COLOR_BUFFER_BIT );
-
 	glColor3f( 1.0, 1.0, 1.0 );
-    glBegin( GL_LINES );
-        glVertex2i( 10, 10 );
-        glVertex2i( 10, vHeight-10 );
-    glEnd();
-
-    glBegin( GL_LINES );
-        glVertex2i( 10, vHeight-10 );
-        glVertex2i( vWidth-10, vHeight-10 );
-    glEnd();
     
-	glBegin( GL_LINES );
-        glVertex2i( vWidth-10, vHeight-10 );
-        glVertex2i( vWidth-10, 10 );
-    glEnd();
-    
-	glBegin( GL_LINES );
-        glVertex2i( 10, 10 );
-        glVertex2i( vWidth-10, 10 );
-    glEnd();
-
-	glBegin( GL_LINES );
-        glVertex2i( -1000, vHeight / 2 );
-        glVertex2i( vWidth + 1000, vHeight / 2 );
-    glEnd();
-
-	glBegin( GL_LINES );
-        glVertex2i( vWidth / 2, -1000 );
-        glVertex2i( vWidth / 2, vHeight + 1000 );
-    glEnd();
-
 	// Draw all registered drawables
 	for (Drawable* d : this->drawables)
 	{
