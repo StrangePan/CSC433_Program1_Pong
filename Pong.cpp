@@ -110,6 +110,8 @@ int Pong::run( int argc, char *argv[] )
     glutIdleFunc( *::idle );                               // animation callback
 
 
+	Board board( 0, 0, 600, 300, 16 );
+
     // go into OpenGL/GLUT main loop, never to return
     glutMainLoop();
 

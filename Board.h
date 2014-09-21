@@ -1,7 +1,9 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+#include <iostream>
 #include "Drawable.h"
+using namespace std;
 
 class Board : public Drawable
 {
@@ -11,8 +13,8 @@ class Board : public Drawable
 		int width;
 		int height;
 		int border;
-		int score_1;
-		int score_2;
+		const char *score_1;
+		const char *score_2;
 
 		Board(int x, int y, int width, int height, int border);
 		void draw();
