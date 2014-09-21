@@ -3,15 +3,18 @@
 
 #include "Drawable.h"
 
-class Board : Drawable
+class Board : public Drawable
 {
 	public:
-		int center_x;
-		int center_y;
+		int x;
+		int y;
 		int width;
 		int height;
+		int border;
+		int score_1;
+		int score_2;
 
-		Board(int x, int y, int width, int height);
+		Board(int x, int y, int width, int height, int border);
 		void draw();
 };
 

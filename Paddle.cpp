@@ -7,5 +7,7 @@ Paddle::Paddle(int x, int y, int width, int height) :
 
 void Paddle::draw()
 {
-	// TODO Drawing code here
+	glColor3f( 1.0, 1.0, 1.0 );
+	glRectf( center_x - (width / 2), center_y -(height / 2), center_x
+		+ (width / 2), center_y + (height / 2 ) );
 }

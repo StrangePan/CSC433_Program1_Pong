@@ -3,7 +3,8 @@
 
 #include "Drawable.h"
 
-class Paddle : Drawable
+
+class Paddle : public Drawable
 {
 	public:
 		int height;
