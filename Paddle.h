@@ -3,7 +3,6 @@
 
 #include "Drawable.h"
 
-
 class Paddle : public Drawable
 {
 	public:

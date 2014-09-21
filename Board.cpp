@@ -1,14 +1,45 @@
 #include "Board.h"
 
 Board::Board(int x, int y, int width, int height, int border) :
-		x(x), y(y), width(width), height(height), border(border)
-{ }
+		x(x), y(y), width(width), height(height), border(border),
+		left_text(NULL), right_text(NULL)
+{
+	left_text = new (nothrow) unsigned char[1];
+	right_text = new (nothrow) unsigned char[1];
+	left_text[0] = '\0';
+	right_text[0] = '\0';
+}
+
+Board::~Board()
+{
+	delete[] left_text;
+	delete[] right_text;
+}
+
+void Board::setLeftText(string text)
+{
+	delete[] left_text;
+	left_text = new (nothrow) unsigned char[text.size() + 1];
+	for (int i = 0; i < text.size(); i++)
+	{
+		left_text[i] = (unsigned char) text[i];
+	};
+	left_text[text.size()] = '\0';
+}
+
+void Board::setRightText(string text)
+{
+	delete[] right_text;
+	right_text = new (nothrow) unsigned char[text.size() + 1];
+	for (int i = 0; i < text.size(); i++)
+	{
+		right_text[i] = (unsigned char) text[i];
+	};
+	right_text[text.size()] = '\0';
+}
 
 void Board::draw()
 {
-	score_1 = "0";
-	score_2 = "0";
-
 	glColor3f( 1.0, .8, .8 );
     glRectf( x - border, y - border, x + border + width, y );
     glRectf( x - border, y - border, x, y + height + border );
@@ -26,9 +57,9 @@ void Board::draw()
 	glColor3f( .8, .8, 1.0 );
 	glRasterPos2f( width / 2 - 64, height - 32 );
 
-	glutBitmapString( GLUT_BITMAP_TIMES_ROMAN_24, ( const unsigned char *)  score_1 );
+	glutBitmapString( GLUT_BITMAP_TIMES_ROMAN_24, left_text );
 
 	glRasterPos2f( width / 2 + 64, height - 32 );
-
-	glutBitmapString( GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char *) score_2 );
+	
+	glutBitmapString( GLUT_BITMAP_TIMES_ROMAN_24, right_text );
 }

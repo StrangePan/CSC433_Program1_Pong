@@ -4,6 +4,7 @@
 class PongGame;
 
 #include <list>
+#include <string>
 #include "Pong.h"
 #include "Board.h"
 #include "Paddle.h"

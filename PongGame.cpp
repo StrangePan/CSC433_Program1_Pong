@@ -16,7 +16,6 @@ PongGame::~PongGame()
 	clear();
 }
 
-
 void PongGame::step()
 { }
 
@@ -78,6 +77,9 @@ void PongGame::reset()
 	board = new (nothrow) Board(0, 0, width, height, u);
 	left_paddle = new (nothrow) Paddle((int) (u * 2.5), height/2, u, left_paddle_size * u);
 	right_paddle = new (nothrow) Paddle(width - (int) (u * 2.5), height/2, u, right_paddle_size * u);
+
+	board->setRightText("0");
+	board->setLeftText("1");
 
 	// Register game elements with drawing system
 	Pong::getInstance()->drawObject(board);
