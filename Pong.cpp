@@ -180,7 +180,28 @@ void Pong::reshape(int w, int h)
 }
 
 void Pong::keyboard(unsigned char key, int x, int y)
-{ }
+{
+	// keypresses
+	const int EscapeKey = 27;
+
+    // correct for upside-down screen coordinates
+    y = view_height - y;
+    cerr << "keypress: " << key << " (" << int( key ) << ") at (" << x << "," << y << ")\n";
+
+    // process keypresses
+    switch ( key )
+    {
+        // Escape quits program
+        case EscapeKey:
+            exit( 0 );
+            break;
+
+        // anything else redraws window
+        default:
+            glutPostRedisplay();
+            break;
+    }
+}
 
 void Pong::mouseclick(int button, int state, int x, int y)
 { }

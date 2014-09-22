@@ -4,7 +4,7 @@
 class Pong;
 
 using namespace std;
-
+#include <iostream>
 #include <string>
 #include <map>
 #include <list>
