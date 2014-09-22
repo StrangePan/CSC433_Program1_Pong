@@ -50,7 +50,7 @@ class Pong
 		void reshape( int w, int h );
 		void keyboard( unsigned char key, int x, int y );
 		void mouseclick( int button, int state, int x, int y );
-		void idle();
+		void step();
 
 };
 
@@ -58,6 +58,6 @@ void display();
 void reshape( int w, int h );
 void keyboard( unsigned char key, int x, int y );
 void mouseclick( int button, int state, int x, int y );
-void idle();
+void step(int i);
 
 #endif

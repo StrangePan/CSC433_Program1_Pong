@@ -108,8 +108,7 @@ int Pong::run( int argc, char *argv[] )
     glutReshapeFunc( *::reshape );                         // how to resize window
     glutKeyboardFunc( *::keyboard );                       // how to handle key presses
     glutMouseFunc( *::mouseclick );                        // how to handle mouse events
-    glutIdleFunc( *::idle );                               // animation callback
-
+	glutTimerFunc(0, *::step, 0);
 
 	Board board( 0, 0, 600, 300, 16 );
 	Ball ball( 300, 150, 28, 0, 0 );
@@ -229,9 +228,9 @@ void Pong::mouseclick(int button, int state, int x, int y)
     }
 }
 
-void Pong::idle()
-{ 
-	game -> step();
+void Pong::step()
+{
+	game->step();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -256,7 +255,10 @@ void mouseclick(int button, int state, int x, int y)
 	Pong::getInstance()->mouseclick(button, state, x, y);
 }
 
-void idle()
+void step(int i)
 {
-	Pong::getInstance()->idle();
+	static float fps_delay = 1000.0 / 60.0;
+	glutTimerFunc(fps_delay, *::step, 0);
+	Pong::getInstance()->step();
+	display();
 }
