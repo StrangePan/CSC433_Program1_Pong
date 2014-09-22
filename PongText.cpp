@@ -1,6 +1,6 @@
 #include "PongText.h"
 
-PongText::PongText(string text, double x, double y, double size, int align = 1) :
+PongText::PongText(string text, double x, double y, double size, int align) :
 		text(text), x(x), y(y), size(size), align(align)
 { }
 
@@ -34,7 +34,7 @@ void PongText::draw()
 	int x_off = 0;
 	int y_off = 0;
 
-	for (int i = 0; i < text.size(); i++)
+	for (unsigned int i = 0; i < text.size(); i++)
 	{
 		if (text[i] == '\n')
 		{
@@ -130,7 +130,7 @@ void PongText::calc_size()
 	int h = 0;
 	width = 0;
 	height = 0;
-	for (int i = 0; i <= text.size(); i++)
+	for (unsigned int i = 0; i <= text.size(); i++)
 	{
 		if (i == text.size() || text[i] == '\n')
 		{
