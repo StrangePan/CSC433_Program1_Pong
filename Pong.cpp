@@ -110,9 +110,6 @@ int Pong::run( int argc, char *argv[] )
     glutMouseFunc( *::mouseclick );                        // how to handle mouse events
 	glutTimerFunc(0, *::step, 0);
 
-	Board board( 0, 0, 600, 300, 16 );
-	Ball ball( 300, 150, 28, 0, 0 );
-
     // go into OpenGL/GLUT main loop, never to return
     glutMainLoop();
 

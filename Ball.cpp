@@ -22,4 +22,14 @@ void Ball::step( )
 {
 	center_x += x_velocity;
 	center_y += y_velocity;
+
+	if( center_x == 600 - width/2 || center_x == 0 + width/2 )
+	{
+		x_velocity *= -1;
+	}
+	if( center_y == 300 - width/2 || center_y == 0 + width/2 )
+	{
+		y_velocity *= -1;
+	}
+
 }
