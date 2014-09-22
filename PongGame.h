@@ -10,6 +10,8 @@ class PongGame;
 #include "Paddle.h"
 #include "Ball.h"
 
+using namespace std;
+
 class PongGame
 {
 	private:

@@ -78,8 +78,8 @@ void PongGame::reset()
 	left_paddle = new (nothrow) Paddle((int) (u * 2.5), height/2, u, left_paddle_size * u);
 	right_paddle = new (nothrow) Paddle(width - (int) (u * 2.5), height/2, u, right_paddle_size * u);
 
-	board->setRightText("0");
-	board->setLeftText("1");
+	board->setRightText(to_string(p1_score));
+	board->setLeftText(to_string(p2_score));
 
 	// Register game elements with drawing system
 	Pong::getInstance()->drawObject(board);
