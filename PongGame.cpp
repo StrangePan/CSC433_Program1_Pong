@@ -17,7 +17,12 @@ PongGame::~PongGame()
 }
 
 void PongGame::step()
-{ }
+{
+	if( ball != NULL )
+	{
+		ball -> step();
+	}
+}
 
 void PongGame::keyDownEvent(unsigned char key)
 { }
@@ -26,7 +31,10 @@ void PongGame::keyUpEvent(unsigned char key)
 { }
 
 void PongGame::startGame()
-{ }
+{ 
+	ball = new (nothrow) Ball( width/2, height/2, 28, 1, 1 );
+	Pong::getInstance() -> drawObject( ball, 1 );
+}
 
 void PongGame::quitGame()
 { }

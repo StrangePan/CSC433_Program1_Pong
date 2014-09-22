@@ -2,8 +2,9 @@
 #define _BALL_H_
 
 #include "Drawable.h"
+#include "Steppable.h"
 
-class Ball : public Drawable
+class Ball : public Drawable, public Steppable
 {
 	public:
 		int center_x;
@@ -13,6 +14,7 @@ class Ball : public Drawable
 		double y_velocity;
 
 		Ball(int x, int y, int width, double x_velocity, double y_velocity);
+		void step();
 		void draw();
 };
 

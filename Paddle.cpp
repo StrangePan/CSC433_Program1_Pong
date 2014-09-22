@@ -11,3 +11,6 @@ void Paddle::draw()
 	glRectf( center_x - (width / 2), center_y -(height / 2), center_x
 		+ (width / 2), center_y + (height / 2 ) );
 }
+
+void Paddle::step()
+{};

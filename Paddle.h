@@ -2,8 +2,9 @@
 #define _PADDLE_H_
 
 #include "Drawable.h"
+#include "Steppable.h"
 
-class Paddle : public Drawable
+class Paddle : public Drawable, public Steppable
 {
 	public:
 		int height;
@@ -16,6 +17,7 @@ class Paddle : public Drawable
 		bool left;
 		
 		Paddle(int x, int y, int width, int height);
+		void step();
 		void draw();
 };
 

@@ -17,3 +17,9 @@ void Ball::draw( )
     gluDeleteQuadric( disk );
     glPopMatrix();
 }
+
+void Ball::step( )
+{
+	center_x += x_velocity;
+	center_y += y_velocity;
+}

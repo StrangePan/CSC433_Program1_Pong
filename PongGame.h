@@ -9,10 +9,11 @@ class PongGame;
 #include "Board.h"
 #include "Paddle.h"
 #include "Ball.h"
+#include "Steppable.h"
 
 using namespace std;
 
-class PongGame
+class PongGame : public Steppable
 {
 	private:
 		bool game_active;

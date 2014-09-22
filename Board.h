@@ -20,7 +20,6 @@ class Board : public Drawable
 		~Board();
 		void setLeftText(string text);
 		void setRightText(string text);
-
 		void draw();
 };
 

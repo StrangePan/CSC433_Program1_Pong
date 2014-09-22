@@ -10,6 +10,7 @@ Pong::Pong() :
 	if (instance == NULL)
 		instance = this;
 	game = new (nothrow) PongGame;
+	game -> startGame();
 }
 
 Pong::~Pong()
@@ -230,7 +231,7 @@ void Pong::mouseclick(int button, int state, int x, int y)
 
 void Pong::idle()
 { 
-	
+	game -> step();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
