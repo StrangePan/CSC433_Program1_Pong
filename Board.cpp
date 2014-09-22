@@ -53,13 +53,20 @@ void Board::draw()
 		glVertex2f( width/2, 0 );
 		glVertex2f( width/2, height );
 	glEnd();
+	glDisable( GL_LINE_STIPPLE );
 
 	glColor3f( .8, .8, 1.0 );
-	glRasterPos2f( width / 2 - 64, height - 32 );
 
-	glutBitmapString( GLUT_BITMAP_TIMES_ROMAN_24, left_text );
+	glPushMatrix();
+	glScalef( 0.25, 0.25, 1.0 );
+    glTranslatef( (width / 2 - 64) * 4, (height - 32) * 4, 0);
+    glutStrokeString(GLUT_STROKE_ROMAN, left_text);
+    glPopMatrix();
 
-	glRasterPos2f( width / 2 + 64, height - 32 );
-	
-	glutBitmapString( GLUT_BITMAP_TIMES_ROMAN_24, right_text );
+	glPushMatrix();
+	glScalef( 0.25, 0.25, 1.0 );
+    glTranslatef( (width / 2 + 64) * 4, (height - 32) * 4, 0);
+    glutStrokeString(GLUT_STROKE_ROMAN, right_text);
+    glPopMatrix();
+
 }
