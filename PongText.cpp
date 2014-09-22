@@ -1,23 +1,37 @@
 #include "PongText.h"
 
-PongText::PongText(string text, double x, double y, double size, int align) :
-		text(text), x(x), y(y), size(size), align(align)
-{ }
+PongText::PongText(double x, double y, double size, string text, int align) :
+		x(x), y(y), size(size), text(text), align(align)
+{
+	if (align < -1) this -> align = -1;
+	if (align > 1) this -> align = 1;
+	calc_size();
+}
 
 PongText::~PongText()
 { }
 
 void PongText::setText(string text)
-{ }
+{
+	this -> text = text;
+	calc_size();
+}
 
 void PongText::setPosition(double x, double y)
-{ }
+{
+	this -> x = x;
+	this -> y = y;
+}
 
 void PongText::setSize(double size)
-{ }
+{
+	this -> size = size;
+}
 
 void PongText::setAlignment(int align)
-{ }
+{
+	this -> align = ( align < 0 ? -1 : align > 0 ? 1 : 0 );
+}
 
 double PongText::getWidth()
 {
@@ -31,23 +45,53 @@ double PongText::getHeight()
 
 void PongText::draw()
 {
+	double x;
+	double y = this -> y;
 	int x_off = 0;
 	int y_off = 0;
 
 	for (unsigned int i = 0; i < text.size(); i++)
 	{
-		if (text[i] == '\n')
+		// If new line, calculate line starting point
+		if (x_off == 0)
+		{
+			// Calculate width of current line
+			int w = 0;
+			for (unsigned int j = i; j < text.size() && text[j] != '\n'; j++)
+			{
+				w += char_width(text[j]) + 1;
+			}
+			if (w > 0) w--; // fix off-by-one error
+
+			switch (align)
+			{
+				default:
+				case 1:		// left align
+					x = this -> x;
+					break;
+
+				case 0:		// center align
+					x = this -> x - (w * size / 8.0) / 2.0;
+					break;
+
+				case -1:	// right align
+					x = this->x - (w * size / 8.0);
+					break;
+			}
+		}
+
+		if (text[i] == '\n')	// Special case for new line
 		{
 			x_off = 0;
 			y_off++;
 		}
-		else if (text[i] == ' ')
+		else if (text[i] == ' ')	// Special case for space
 		{
-			x_off += 2;
+			x_off += (x_off == 0 ? 3 : 2);
 		}
 		else
 		{
-			draw_char(text[i], x + x_off / 8.0, y + y_off * 10.0 / 8.0, size);
+			draw_char(text[i], x + x_off * size / 8.0, y + y_off * size * 10.0 / 8.0, size);
 			x_off += char_width(text[i]) + 1;
 		}
 	}
@@ -63,8 +107,8 @@ int PongText::char_width(char c)
 		case '1':
 		case ' ':
 		case '.':
-		case '!':
 		case ',':
+		case '!':
 		case ':':
 		case ';':
 		case '|':
@@ -72,12 +116,17 @@ int PongText::char_width(char c)
 			return 1;
 
 		case '?':
-		case '`':
+		case '(':
+		case ')':
+		case '[':
+		case ']':
 			return 2;
 
 		case 'I':
-		case 'X':
 		case '"':
+		case '-':
+		case '+':
+		case '=':
 			return 3;
 
 		case '0':
@@ -107,8 +156,12 @@ int PongText::char_width(char c)
 		case 'S':
 		case 'U':
 		case 'V':
+		case 'X':
 		case 'Y':
 		case 'Z':
+		case '_':
+		case '/':
+		case '\\':
 			return 4;
 			
 		case 'M':

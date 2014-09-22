@@ -1,8 +1,13 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+class Board;
+
 #include <string>
 #include "Drawable.h"
+#include "Pong.h"
+#include "PongText.h"
+
 using namespace std;
 
 class Board : public Drawable
@@ -13,8 +18,8 @@ class Board : public Drawable
 		int width;
 		int height;
 		int border;
-		unsigned char* left_text;
-		unsigned char* right_text;
+		PongText left_text;
+		PongText right_text;
 
 		Board(int x, int y, int width, int height, int border);
 		~Board();

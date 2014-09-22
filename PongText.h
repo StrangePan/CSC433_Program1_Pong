@@ -1,6 +1,8 @@
 #ifndef _PONGTEXT_H_
 #define _PONGTEXT_H_
 
+class PongText;
+
 #include <string>
 #include "Drawable.h"
 
@@ -23,7 +25,7 @@ class PongText : public Drawable
 		void calc_size();
 
 	public:
-		PongText(string text, double x, double y, double size, int align = 1);
+		PongText(double x, double y, double size, string text = "", int align = 1);
 		~PongText();
 
 		void setText(string text);
