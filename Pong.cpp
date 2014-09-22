@@ -95,7 +95,7 @@ int Pong::run( int argc, char *argv[] )
 		h = h / 2 - view_height / 2;
 	}
 
-    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE );     // 32-bit graphics and single buffering
+    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_MULTISAMPLE );     // 32-bit graphics and single buffering
 
     glutInitWindowSize( view_width, view_height);    // initial window size
     glutInitWindowPosition( w, h );                  // initial window position
@@ -254,7 +254,7 @@ void mouseclick(int button, int state, int x, int y)
 
 void step(int i)
 {
-	static float fps_delay = 1000.0 / 60.0;
+	static unsigned int fps_delay = 1000 / 60;
 	glutTimerFunc(fps_delay, *::step, 0);
 	Pong::getInstance()->step();
 	display();

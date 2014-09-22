@@ -1,8 +1,11 @@
 #ifndef _BALL_H_
 #define _BALL_H_
 
+class Ball;
+
 #include "Drawable.h"
 #include "Steppable.h"
+#include "PongGame.h"
 
 class Ball : public Drawable, public Steppable
 {
@@ -12,8 +15,9 @@ class Ball : public Drawable, public Steppable
 		int width;
 		double x_velocity;
 		double y_velocity;
+		PongGame* game;
 
-		Ball(int x, int y, int width, double x_velocity, double y_velocity);
+		Ball(PongGame* game, int x, int y, int width, double x_velocity, double y_velocity);
 		void step();
 		void draw();
 };

@@ -48,6 +48,11 @@ class PongGame : public Steppable
 		void pauseGame();
 		void resumeGame();
 
+		Board* getBoard();
+		Paddle* getLeftPaddle();
+		Paddle* getRightPaddle();
+		Ball* getBall();
+
 		bool isPaused();
 };
 

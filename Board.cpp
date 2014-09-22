@@ -38,6 +38,26 @@ void Board::setRightText(string text)
 	right_text[text.size()] = '\0';
 }
 
+int Board::getX()
+{
+	return x;
+}
+
+int Board::getY()
+{
+	return y;
+}
+
+int Board::getWidth()
+{
+	return width;
+}
+
+int Board::getHeight()
+{
+	return height;
+}
+
 void Board::draw()
 {
 	glColor3d( 1.0, 0.8, 0.8 );

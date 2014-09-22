@@ -18,6 +18,16 @@ PongGame::~PongGame()
 
 void PongGame::step()
 {
+	if (game_active && game_paused) return;
+
+	if (left_paddle != NULL)
+	{
+		left_paddle -> step();
+	}
+	if (right_paddle != NULL)
+	{
+		right_paddle -> step();
+	}
 	if( ball != NULL )
 	{
 		ball -> step();
@@ -32,18 +42,29 @@ void PongGame::keyUpEvent(unsigned char key)
 
 void PongGame::startGame()
 { 
-	ball = new (nothrow) Ball( width/2, height/2, 28, 1, 1 );
+	if (game_active) return;
+	game_active = true;
+	game_paused = false;
+	ball = new (nothrow) Ball( this, width/2, height/2, 28, 1, 1 );
 	Pong::getInstance() -> drawObject( ball, 1 );
 }
 
 void PongGame::quitGame()
-{ }
+{
+	if (!game_active) return;
+	game_active = false;
+	if (ball != NULL) delete ball;
+}
 
 void PongGame::pauseGame()
-{ }
+{
+	game_paused = true;
+}
 
 void PongGame::resumeGame()
-{ }
+{
+	game_paused = false;
+}
 
 void PongGame::clear()
 {
@@ -83,8 +104,8 @@ void PongGame::reset()
 
 	// Construct game elements
 	board = new (nothrow) Board(0, 0, width, height, u);
-	left_paddle = new (nothrow) Paddle((int) (u * 2.5), height/2, u, left_paddle_size * u);
-	right_paddle = new (nothrow) Paddle(width - (int) (u * 2.5), height/2, u, right_paddle_size * u);
+	left_paddle = new (nothrow) Paddle(this, (int) (u * 2.5), height/2, u, left_paddle_size * u);
+	right_paddle = new (nothrow) Paddle(this, width - (int) (u * 2.5), height/2, u, right_paddle_size * u);
 
 	board->setRightText(to_string(p1_score));
 	board->setLeftText(to_string(p2_score));
@@ -93,6 +114,26 @@ void PongGame::reset()
 	Pong::getInstance()->drawObject(board);
 	Pong::getInstance()->drawObject(left_paddle, 1);
 	Pong::getInstance()->drawObject(right_paddle, 1);
+}
+
+Board* PongGame::getBoard()
+{
+	return board;
+}
+
+Paddle* PongGame::getLeftPaddle()
+{
+	return left_paddle;
+}
+
+Paddle* PongGame::getRightPaddle()
+{
+	return right_paddle;
+}
+
+Ball* PongGame::getBall()
+{
+	return ball;
 }
 
 bool PongGame::isPaused()
