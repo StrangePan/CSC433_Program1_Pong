@@ -111,6 +111,7 @@ int Pong::run( int argc, char *argv[] )
 
 
 	Board board( 0, 0, 600, 300, 16 );
+	Ball ball( 300, 150, 28, 0, 0 );
 
     // go into OpenGL/GLUT main loop, never to return
     glutMainLoop();
@@ -204,10 +205,33 @@ void Pong::keyboard(unsigned char key, int x, int y)
 }
 
 void Pong::mouseclick(int button, int state, int x, int y)
-{ }
+{
+	// correct for upside-down screen coordinates
+    y = view_height - y;
+
+    // handle mouse click events
+    switch ( button )
+    {
+        case GLUT_LEFT_BUTTON:              // left button
+            if ( state == GLUT_DOWN )           // press
+                cerr << "mouse click: left press at    (" << x << "," << y << ")\n";
+            else if ( state == GLUT_UP )        // release
+                cerr << "mouse click: left release at  (" << x << "," << y << ")\n";
+            break;
+
+        case GLUT_RIGHT_BUTTON:             // right button
+            if ( state == GLUT_DOWN )           // press
+                cerr << "mouse click: right press at   (" << x << "," << y << ")\n";
+            else if ( state == GLUT_UP )        // release
+                cerr << "mouse click: right release at (" << x << "," << y << ")\n";
+            break;
+    }
+}
 
 void Pong::idle()
-{ }
+{ 
+	
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
