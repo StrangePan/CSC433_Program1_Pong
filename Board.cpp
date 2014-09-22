@@ -20,7 +20,7 @@ void Board::setLeftText(string text)
 {
 	delete[] left_text;
 	left_text = new (nothrow) unsigned char[text.size() + 1];
-	for (int i = 0; i < text.size(); i++)
+	for (unsigned int i = 0; i < text.size(); i++)
 	{
 		left_text[i] = (unsigned char) text[i];
 	};
@@ -31,7 +31,7 @@ void Board::setRightText(string text)
 {
 	delete[] right_text;
 	right_text = new (nothrow) unsigned char[text.size() + 1];
-	for (int i = 0; i < text.size(); i++)
+	for (unsigned int i = 0; i < text.size(); i++)
 	{
 		right_text[i] = (unsigned char) text[i];
 	};
@@ -40,32 +40,33 @@ void Board::setRightText(string text)
 
 void Board::draw()
 {
-	glColor3f( 1.0, .8, .8 );
-    glRectf( x - border, y - border, x + border + width, y );
-    glRectf( x - border, y - border, x, y + height + border );
-	glRectf( x + width + border, y + height + border, x + width, y-border);
-	glRectf( x + width + border, y + height + border, x -border, y+height);
+	glColor3d( 1.0, 0.8, 0.8 );
+    glRecti( x - border, y - border, x + border + width, y );
+    glRecti( x - border, y - border, x, y + height + border );
+	glRecti( x + width + border, y + height + border, x + width, y-border);
+	glRecti( x + width + border, y + height + border, x -border, y+height);
 
 	glLineStipple(3, 0xAAAA );
 	glEnable( GL_LINE_STIPPLE );
-	glColor3f( .8, 1.0, .8 );
+	glColor3d( 0.8, 1.0, 0.8 );
 	glBegin( GL_LINES );
-		glVertex2f( width/2, 0 );
-		glVertex2f( width/2, height );
+		glVertex2i( width/2, 0 );
+		glVertex2i( width/2, height );
 	glEnd();
 	glDisable( GL_LINE_STIPPLE );
 
-	glColor3f( .8, .8, 1.0 );
+	glColor3d( 0.8, 0.8, 1.0 );
+	glLineWidth( 1.5 );
 
 	glPushMatrix();
 	glScalef( 0.25, 0.25, 1.0 );
-    glTranslatef( (width / 2 - 64) * 4, (height - 32) * 4, 0);
+    glTranslated( (width / 2 - 64) * 4.0, (height - 32) * 4.0, 0);
     glutStrokeString(GLUT_STROKE_ROMAN, left_text);
     glPopMatrix();
 
 	glPushMatrix();
 	glScalef( 0.25, 0.25, 1.0 );
-    glTranslatef( (width / 2 + 64) * 4, (height - 32) * 4, 0);
+    glTranslated( (width / 2 + 64) * 4.0, (height - 32) * 4.0, 0);
     glutStrokeString(GLUT_STROKE_ROMAN, right_text);
     glPopMatrix();
 
