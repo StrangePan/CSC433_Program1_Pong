@@ -13,3 +13,21 @@ void Paddle::draw()
 
 void Paddle::step()
 {};
+
+int Paddle::getX()
+{
+	return center_x;
+}
+int Paddle::getY()
+{
+	return center_y;
+}
+int Paddle::getWidth()
+{
+	return width;
+}
+
+int Paddle::getHeight()
+{
+	return height;
+}
