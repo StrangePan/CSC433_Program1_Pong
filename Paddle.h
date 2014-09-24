@@ -9,25 +9,30 @@ class Paddle;
 
 class Paddle : public Drawable, public Steppable
 {
-	public:
+	private:
 		int height;
 		int width;
 		int center_x;
 		int center_y;
+		int maxx;
+		int minx;
+		int maxy;
+		int miny;
 		PongGame* game;
+	
+	public:
+		bool up;
+		bool down;
+		bool left;
+		bool right;
 		
-		Paddle(PongGame* game, int x, int y, int width, int height);
+		Paddle(PongGame* game, int x, int y, int width, int height, int maxx, int minx, int maxy, int miny);
 		void step();
 
 		int getX();
 		int getY();
 		int getWidth();
 		int getHeight();
-
-		void moveUp();
-		void moveDown();
-		void moveLeft();
-		void moveRight();
 
 		void draw();
 };

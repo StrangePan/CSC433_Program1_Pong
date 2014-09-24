@@ -10,7 +10,7 @@ Pong::Pong() :
 	if (instance == NULL)
 		instance = this;
 	game = new (nothrow) PongGame;
-	game -> startGame();
+	game -> startGame(false, false);
 }
 
 Pong::~Pong()
@@ -103,10 +103,15 @@ int Pong::run( int argc, char *argv[] )
 
     glClearColor( 0, 0, 0, 1.0 );                 // use black for glClear command
 
+	glutIgnoreKeyRepeat(1);
+
     // callback routines
     glutDisplayFunc( *::display );                         // how to redisplay window
     glutReshapeFunc( *::reshape );                         // how to resize window
-    glutKeyboardFunc( *::keyboard );                       // how to handle key presses
+    glutKeyboardFunc( *::keyDown );                       // how to handle key presses
+	glutKeyboardUpFunc( *::keyUp );
+	glutSpecialFunc( *::keySpecialDown );
+	glutSpecialUpFunc( *::keySpecialUp );
     glutMouseFunc( *::mouseclick );                        // how to handle mouse events
 	glutTimerFunc(0, *::step, 0);
 
@@ -181,15 +186,7 @@ void Pong::keyboard(unsigned char key, int x, int y)
 {
 	// keypresses
 	const int EscapeKey = 27;
-	const int w = 119;
-	const int W = 87;
-	const int s = 115;
-	const int S = 83;
-	const int a = 97;
-	const int A = 65;
-	const int d = 100;
-	const int D = 68;
-
+	
     // correct for upside-down screen coordinates
     y = view_height - y;
     cerr << "keypress: " << key << " (" << int( key ) << ") at (" << x << "," << y << ")\n";
@@ -197,28 +194,7 @@ void Pong::keyboard(unsigned char key, int x, int y)
     // process keypresses
     switch ( key )
     {
-		case W:
-		case w:
-			game ->  getLeftPaddle() -> moveUp();
-			break;
-		case A:
-		case a:
-			game -> getLeftPaddle() -> moveLeft();
-			break;
-		case S:
-		case s:
-			game -> getLeftPaddle() -> moveDown();
-			break;
-		case D:
-		case d:
-			game -> getLeftPaddle() -> moveRight();
-			break;
-
-
-
-
-
-        // Escape quits program
+	    // Escape quits program
         case EscapeKey:
             exit( 0 );
             break;
@@ -228,6 +204,23 @@ void Pong::keyboard(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
     }
+}
+
+void Pong::keyDown(unsigned char key, int x, int y)
+{
+	game->keyDownEvent(key);
+}
+void Pong::keyUp(unsigned char key, int x, int y)
+{
+	game->keyUpEvent(key);
+}
+void Pong::keySpecialDown(int key, int x, int y)
+{
+	game->keySpecialDownEvent(key);
+}
+void Pong::keySpecialUp(int key, int x, int y)
+{
+	game->keySpecialUpEvent(key);
 }
 
 void Pong::mouseclick(int button, int state, int x, int y)
@@ -276,6 +269,26 @@ void keyboard(unsigned char key, int x, int y)
 	Pong::getInstance()->keyboard(key, x, y);
 }
 
+void keyDown(unsigned char key, int x, int y)
+{
+	Pong::getInstance()->keyDown(key, x, y);
+}
+
+void keyUp(unsigned char key, int x, int y)
+{
+	Pong::getInstance()->keyUp(key, x, y);
+}
+
+void keySpecialDown(int key, int x, int y)
+{
+	Pong::getInstance()->keySpecialDown(key, x, y);
+}
+
+void keySpecialUp(int key, int x, int y)
+{
+	Pong::getInstance()->keySpecialUp(key, x, y);
+}
+
 void mouseclick(int button, int state, int x, int y)
 {
 	Pong::getInstance()->mouseclick(button, state, x, y);
@@ -286,5 +299,5 @@ void step(int i)
 	static unsigned int fps_delay = 1000 / 60;
 	glutTimerFunc(fps_delay, *::step, 0);
 	Pong::getInstance()->step();
-	display();
+	glutPostRedisplay();
 }

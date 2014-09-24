@@ -4,6 +4,7 @@
 class Pong;
 
 using namespace std;
+
 #include <iostream>
 #include <string>
 #include <map>
@@ -49,6 +50,10 @@ class Pong
 		void display();
 		void reshape( int w, int h );
 		void keyboard( unsigned char key, int x, int y );
+		void keyDown(unsigned char key, int x, int y);
+		void keyUp(unsigned char key, int x, int y);
+		void keySpecialDown(int key, int x, int y);
+		void keySpecialUp(int key, int x, int y);
 		void mouseclick( int button, int state, int x, int y );
 		void step();
 
@@ -57,6 +62,10 @@ class Pong
 void display();
 void reshape( int w, int h );
 void keyboard( unsigned char key, int x, int y );
+void keyDown(unsigned char key, int x, int y);
+void keyUp(unsigned char key, int x, int y);
+void keySpecialDown(int key, int x, int y);
+void keySpecialUp(int key, int x, int y);
 void mouseclick( int button, int state, int x, int y );
 void step(int i);
 

@@ -1,18 +1,52 @@
 #include "Paddle.h"
 
-Paddle::Paddle(PongGame* game, int x, int y, int width, int height) :
-		game(game), center_x(x), center_y(y), width(width), height(height)
+Paddle::Paddle(PongGame* game, int x, int y, int width, int height, int maxx, int minx, int maxy, int miny) :
+		game(game), center_x(x), center_y(y), width(width), height(height),
+		up(false), down(false), left(false), right(false), maxx(maxx), minx(minx), maxy(maxy), miny(miny)
 { }
 
 void Paddle::draw()
 {
 	glColor3f( 1.0, 1.0, 1.0 );
-	glRectf( center_x - (width / 2), center_y -(height / 2), center_x
+	glRecti( center_x - (width / 2), center_y -(height / 2), center_x
 		+ (width / 2), center_y + (height / 2 ) );
 }
 
 void Paddle::step()
-{};
+{
+	if (up)
+	{
+		center_y += 5;
+		if (center_y + height / 2 > maxy)
+		{
+			center_y = maxy - height / 2;
+		}
+	}
+	if (down)
+	{
+		center_y -= 5;
+		if (center_y - height / 2 < miny)
+		{
+			center_y = miny + height / 2;
+		}
+	}
+	if (right)
+	{
+		center_x += 5;
+		if (center_x + width / 2 > maxx)
+		{
+			center_x = maxx - width / 2;
+		}
+	}
+	if (left)
+	{
+		center_x -= 5;
+		if (center_x - width / 2 < minx)
+		{
+			center_x = minx + width / 2;
+		}
+	}
+};
 
 int Paddle::getX()
 {
@@ -32,26 +66,3 @@ int Paddle::getHeight()
 	return height;
 }
 
-void Paddle::moveUp()
-{
-	if( center_y + height/2 < game -> getBoard() -> getHeight() )
-		center_y += 5;
-}
-
-void Paddle::moveDown()
-{
-	if( center_y - height/2 > 0 )
-		center_y -= 5;
-}
-
-void Paddle::moveRight()
-{
-	if( center_x + width/2 < ( game -> getBoard() -> getWidth() / 2 ) )
-		center_x += 5;
-}
-
-void Paddle::moveLeft()
-{
-	if( center_x - width/2 > 0 )
-		center_x -= 5;
-}

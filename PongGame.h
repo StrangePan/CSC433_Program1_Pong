@@ -11,6 +11,10 @@ class PongGame;
 #include "Ball.h"
 #include "Steppable.h"
 
+#include "AIController.h"
+#include "PlayerController.h"
+#include "PaddleController.h"
+
 using namespace std;
 
 class PongGame : public Steppable
@@ -18,6 +22,8 @@ class PongGame : public Steppable
 	private:
 		bool game_active;
 		bool game_paused;
+		bool left_ai;
+		bool right_ai;
 		int p1_score;
 		int p2_score;
 		int width;
@@ -29,6 +35,9 @@ class PongGame : public Steppable
 		Paddle* left_paddle;
 		Paddle* right_paddle;
 		Ball* ball;
+
+		PaddleController* left_controller;
+		PaddleController* right_controller;
 
 		int left_paddle_size;
 		int right_paddle_size;
@@ -43,7 +52,9 @@ class PongGame : public Steppable
 		void step();
 		void keyDownEvent(unsigned char key);
 		void keyUpEvent(unsigned char key);
-		void startGame();
+		void keySpecialDownEvent(int key);
+		void keySpecialUpEvent(int key);
+		void startGame(bool left_ai, bool right_ai);
 		void quitGame();
 		void pauseGame();
 		void resumeGame();
