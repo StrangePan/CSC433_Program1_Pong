@@ -8,8 +8,10 @@ class PaddleController;
 class PaddleController : public Steppable
 {
 	public:
-		virtual void keyDown(int key) = 0;
-		virtual void keyUp(int key) = 0;
+		virtual void keyDown(unsigned char key) = 0;
+		virtual void keyUp(unsigned char key) = 0;
+		virtual void keySpecialDown(int key) = 0;
+		virtual void keySpecialUp(int key) = 0;
 		virtual void step() = 0;
 };
 

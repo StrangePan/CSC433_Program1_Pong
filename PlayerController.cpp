@@ -4,31 +4,11 @@ PlayerController::PlayerController(Paddle* paddle, bool arrows) :
 		paddle(paddle), arrows(arrows)
 { }
 
-void PlayerController::keyDown(int key)
+void PlayerController::keyDown(unsigned char key)
 {
-	if (arrows)
+	if (!arrows)
 	{
-		switch (key)
-		{
-			case GLUT_KEY_UP:
-				paddle -> up = true;
-				break;
-			case GLUT_KEY_DOWN:
-				paddle -> down = true;
-				break;
-			case GLUT_KEY_LEFT:
-				paddle -> left = true;
-				break;
-			case GLUT_KEY_RIGHT:
-				paddle -> right = true;
-				break;
-			default:
-				break;
-		}
-	}
-	else
-	{
-		switch (toupper((char)key))
+		switch (toupper(key))
 		{
 			case 'W':
 				paddle -> up = true;
@@ -48,7 +28,55 @@ void PlayerController::keyDown(int key)
 	}
 }
 
-void PlayerController::keyUp(int key)
+void PlayerController::keyUp(unsigned char key)
+{
+	if (!arrows)
+	{
+		switch (toupper(key))
+		{
+			case 'W':
+				paddle -> up = false;
+				break;
+			case 'S':
+				paddle -> down = false;
+				break;
+			case 'A':
+				paddle -> left = false;
+				break;
+			case 'D':
+				paddle -> right = false;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void PlayerController::keySpecialDown(int key)
+{
+	if (arrows)
+	{
+		switch (key)
+		{
+			case GLUT_KEY_UP:
+				paddle -> up = true;
+				break;
+			case GLUT_KEY_DOWN:
+				paddle -> down = true;
+				break;
+			case GLUT_KEY_LEFT:
+				paddle -> left = true;
+				break;
+			case GLUT_KEY_RIGHT:
+				paddle -> right = true;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void PlayerController::keySpecialUp(int key)
 {
 	if (arrows)
 	{
@@ -64,26 +92,6 @@ void PlayerController::keyUp(int key)
 				paddle -> left = false;
 				break;
 			case GLUT_KEY_RIGHT:
-				paddle -> right = false;
-				break;
-			default:
-				break;
-		}
-	}
-	else
-	{
-		switch (toupper((char)key))
-		{
-			case 'W':
-				paddle -> up = false;
-				break;
-			case 'S':
-				paddle -> down = false;
-				break;
-			case 'A':
-				paddle -> left = false;
-				break;
-			case 'D':
 				paddle -> right = false;
 				break;
 			default:

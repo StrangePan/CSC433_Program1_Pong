@@ -4,10 +4,15 @@ AIController::AIController(Paddle* paddle, Ball* ball) :
 		paddle(paddle), ball(ball)
 { }
 
-void AIController::keyDown(int key)
+void AIController::keyDown(unsigned char key)
 { }
 
-void AIController::keyUp(int key)
+void AIController::keyUp(unsigned char key)
+{ }
+
+void AIController::keySpecialDown(int key)
+{ }
+void AIController::keySpecialUp(int key)
 { }
 
 void AIController::step()

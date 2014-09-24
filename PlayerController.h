@@ -16,8 +16,10 @@ class PlayerController : public PaddleController
 	public:
 		PlayerController(Paddle* paddle, bool arrows);
 
-		void keyDown(int key);
-		void keyUp(int key);
+		void keyDown(unsigned char key);
+		void keyUp(unsigned char key);
+		void keySpecialDown(int key);
+		void keySpecialUp(int key);
 		void step();
 };
 

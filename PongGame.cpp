@@ -62,17 +62,17 @@ void PongGame::keyUpEvent(unsigned char key)
 void PongGame::keySpecialDownEvent(int key)
 {
 	if (left_controller != NULL)
-		left_controller->keyDown(key);
+		left_controller->keySpecialDown(key);
 	if (right_controller != NULL)
-		right_controller->keyDown(key);
+		right_controller->keySpecialDown(key);
 }
 
 void PongGame::keySpecialUpEvent(int key)
 {
 	if (left_controller != NULL)
-		left_controller->keyUp(key);
+		left_controller->keySpecialUp(key);
 	if (right_controller != NULL)
-		right_controller->keyUp(key);
+		right_controller->keySpecialUp(key);
 }
 
 void PongGame::startGame(bool left_ai, bool right_ai)
