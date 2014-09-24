@@ -97,8 +97,8 @@ void PongGame::reset()
 	clear();
 
 	// Reset game variables
-	p1_score = 0;
-	p2_score = 0;
+	left_score = 0;
+	right_score = 0;
 	left_paddle_size = 8;
 	right_paddle_size = 8;
 
@@ -107,8 +107,8 @@ void PongGame::reset()
 	left_paddle = new (nothrow) Paddle(this, (int) (u * 2.5), height/2, u, left_paddle_size * u);
 	right_paddle = new (nothrow) Paddle(this, width - (int) (u * 2.5), height/2, u, right_paddle_size * u);
 
-	board->setRightText(to_string(p1_score));
-	board->setLeftText(to_string(p2_score));
+	board->setRightText(to_string(left_score));
+	board->setLeftText(to_string(left_score));
 
 	// Register game elements with drawing system
 	Pong::getInstance()->drawObject(board);
@@ -139,4 +139,36 @@ Ball* PongGame::getBall()
 bool PongGame::isPaused()
 {
 	return game_paused;
+}
+
+void PongGame::scoreLeft()
+{
+	left_score++;
+	if ( left_score > 9 )
+	{
+		// ToDo End Game
+	}
+	board -> setLeftText( to_string( left_score ) );
+	resetBall( );
+}
+
+void PongGame::scoreRight()
+{
+	right_score++;
+	if ( right_score > 9 )
+	{
+		// ToDo End Game
+	}
+	board -> setRightText( to_string( right_score ) );
+	resetBall();
+}
+
+void PongGame::resetBall( )
+{
+	ball -> center_x = board -> getWidth() / 2;
+	ball -> center_y = board -> getHeight() / 2;
+	if( (left_score + right_score) % 2 )
+		ball -> x_velocity = -2;
+	else
+		ball -> x_velocity = 2;
 }

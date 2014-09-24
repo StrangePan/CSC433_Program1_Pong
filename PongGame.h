@@ -18,8 +18,8 @@ class PongGame : public Steppable
 	private:
 		bool game_active;
 		bool game_paused;
-		int p1_score;
-		int p2_score;
+		int left_score;
+		int right_score;
 		int width;
 		int height;
 		int x;
@@ -47,6 +47,10 @@ class PongGame : public Steppable
 		void quitGame();
 		void pauseGame();
 		void resumeGame();
+		void scoreLeft();
+		void scoreRight();
+		int getScore();
+		void resetBall();
 
 		Board* getBoard();
 		Paddle* getLeftPaddle();

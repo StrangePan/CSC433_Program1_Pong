@@ -33,6 +33,7 @@ void Ball::step( )
 		y_velocity = abs(y_velocity);
 	}
 
+	/*
 	if ( center_x >= game->getBoard()->getX() + game->getBoard()->getWidth() - width / 2 )
 	{
 		x_velocity = -abs(x_velocity);
@@ -41,6 +42,7 @@ void Ball::step( )
 	{
 		x_velocity = abs(x_velocity);
 	}
+	*/
 
 	// Paddles
 	if (x_velocity > 0)
@@ -55,7 +57,7 @@ void Ball::step( )
 		}
 		else if (center_x - width / 2 > game->getBoard()->getX() + game->getBoard()->getWidth())
 		{
-			// TODO Score left
+			game -> scoreRight(); // TODO Score left
 		}
 	}
 	else
@@ -70,7 +72,7 @@ void Ball::step( )
 		}
 		else if (center_x + width / 2 < game->getBoard()->getX())
 		{
-			// TODO Score right
+			game -> scoreLeft(); // TODO Score right
 		}
 	}
 	
