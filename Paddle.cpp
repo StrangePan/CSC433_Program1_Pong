@@ -31,3 +31,27 @@ int Paddle::getHeight()
 {
 	return height;
 }
+
+void Paddle::moveUp()
+{
+	if( center_y + height/2 < game -> getBoard() -> getHeight() )
+		center_y += 5;
+}
+
+void Paddle::moveDown()
+{
+	if( center_y - height/2 > 0 )
+		center_y -= 5;
+}
+
+void Paddle::moveRight()
+{
+	if( center_x + width/2 < ( game -> getBoard() -> getWidth() / 2 ) )
+		center_x += 5;
+}
+
+void Paddle::moveLeft()
+{
+	if( center_x - width/2 > 0 )
+		center_x -= 5;
+}

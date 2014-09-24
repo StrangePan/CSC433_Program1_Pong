@@ -181,6 +181,14 @@ void Pong::keyboard(unsigned char key, int x, int y)
 {
 	// keypresses
 	const int EscapeKey = 27;
+	const int w = 119;
+	const int W = 87;
+	const int s = 115;
+	const int S = 83;
+	const int a = 97;
+	const int A = 65;
+	const int d = 100;
+	const int D = 68;
 
     // correct for upside-down screen coordinates
     y = view_height - y;
@@ -189,6 +197,27 @@ void Pong::keyboard(unsigned char key, int x, int y)
     // process keypresses
     switch ( key )
     {
+		case W:
+		case w:
+			game ->  getLeftPaddle() -> moveUp();
+			break;
+		case A:
+		case a:
+			game -> getLeftPaddle() -> moveLeft();
+			break;
+		case S:
+		case s:
+			game -> getLeftPaddle() -> moveDown();
+			break;
+		case D:
+		case d:
+			game -> getLeftPaddle() -> moveRight();
+			break;
+
+
+
+
+
         // Escape quits program
         case EscapeKey:
             exit( 0 );

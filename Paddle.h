@@ -24,6 +24,11 @@ class Paddle : public Drawable, public Steppable
 		int getWidth();
 		int getHeight();
 
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
+
 		void draw();
 };
 
