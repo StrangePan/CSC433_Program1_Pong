@@ -45,7 +45,7 @@ void PongGame::startGame()
 	if (game_active) return;
 	game_active = true;
 	game_paused = false;
-	ball = new (nothrow) Ball( this, width/2, height/2, 28, 1, 1 );
+	ball = new (nothrow) Ball( this, width/2, height/2, 28, 2, 1 );
 	Pong::getInstance() -> drawObject( ball, 1 );
 }
 

@@ -1,6 +1,6 @@
 #include "Ball.h"
 
-Ball::Ball(PongGame* game, int x, int y, int width, double x_velocity, double y_velocity) : 
+Ball::Ball(PongGame* game, double x, double y, int width, double x_velocity, double y_velocity) : 
 		game(game), center_x(x), center_y(y), width(width),
 		x_velocity(x_velocity), y_velocity(y_velocity)
 { }
@@ -20,91 +20,59 @@ void Ball::draw( )
 
 void Ball::step( )
 {	
-	center_x += (int) x_velocity;
-	center_y += (int) y_velocity;
+	center_x += x_velocity;
+	center_y += y_velocity;
 
-	if( center_x >= game -> getBoard() -> getWidth() - width/2 || center_x <= 0 + width/2 )
+	// Upper/lower walls
+	if (center_y >= game->getBoard()->getY() + game->getBoard()->getHeight() - width / 2)
 	{
-		x_velocity *= -1;
+		y_velocity = -abs(y_velocity);
 	}
-	if( center_y >= game -> getBoard() -> getHeight() - width/2 || center_y <= 0 + width/2 )
+	if (center_y <= game->getBoard()->getY() + width / 2)
 	{
-		y_velocity *= -1;
-	}
-
-	//paddle walls
-	if( ( center_x == ( game -> getLeftPaddle() -> getX() + ( width / 2 ) +
-		( game -> getLeftPaddle() -> getWidth() / 2 ) ) ||
-		center_x == (game -> getLeftPaddle() -> getX() - ( width / 2 ) -
-		( game -> getLeftPaddle() -> getWidth() / 2 )) ) && 
-		( center_y < ( game -> getLeftPaddle() -> getY() + 
-		( game -> getLeftPaddle() -> getHeight() / 2 ) ) ) &&
-		( center_y > ( game -> getLeftPaddle() -> getY() -
-		( game -> getLeftPaddle() -> getHeight() / 2 ) ) ) )
-	{
-		x_velocity *= -1;
+		y_velocity = abs(y_velocity);
 	}
 
-	if( center_x == ( game -> getRightPaddle() -> getX() + ( width / 2 ) +
-		( game -> getRightPaddle() -> getWidth() / 2 ) ) ||
-		center_x == ( game -> getRightPaddle() -> getX() - ( width / 2 ) -
-		( game -> getRightPaddle() -> getWidth() / 2 ) ) && 
-		( center_y < ( game -> getRightPaddle() -> getY() + 
-		( game -> getRightPaddle() -> getHeight() / 2 ) ) ) &&
-		( center_y > ( game -> getRightPaddle() -> getY() -
-		( game -> getRightPaddle() -> getHeight() / 2 ) ) ) )
+	if ( center_x >= game->getBoard()->getX() + game->getBoard()->getWidth() - width / 2 )
 	{
-		x_velocity *= -1;
+		x_velocity = -abs(x_velocity);
 	}
-	//top and bottom
-	if( ( center_y == ( game -> getLeftPaddle() -> getY() + ( width / 2 ) +
-		( game -> getLeftPaddle() -> getHeight() / 2 ) ) ||
-		center_y == ( game -> getLeftPaddle() -> getY() - ( width / 2 ) -
-		( game -> getLeftPaddle() -> getHeight() / 2 ) ) ) &&
-		( (center_x < game -> getLeftPaddle() -> getX() +
-		( game -> getLeftPaddle() -> getWidth() / 4 ) )&&
-		(center_x > game -> getLeftPaddle() -> getX() -
-		( game -> getLeftPaddle() -> getWidth() /2 ) ) ) )
+	if ( center_x <= game -> getBoard() -> getX() + width/2 )
 	{
-		y_velocity *= -1;
+		x_velocity = abs(x_velocity);
 	}
 
-	if( ( center_y == ( game -> getRightPaddle() -> getY() + ( width / 2 ) +
-		( game -> getRightPaddle() -> getHeight() / 2 ) ) ||
-		center_y == ( game -> getRightPaddle() -> getY() - ( width / 2 ) -
-		( game -> getRightPaddle() -> getHeight() / 2 ) ) ) &&
-		( (center_x > game -> getRightPaddle() -> getX() -
-		( game -> getRightPaddle() -> getWidth() / 4 ) )&&
-		(center_x < game -> getRightPaddle() -> getX() +
-		( game -> getRightPaddle() -> getWidth() /2 ) ) ) )
+	// Paddles
+	if (x_velocity > 0)
 	{
-		y_velocity *= -1;
+		if (center_x >= game->getRightPaddle()->getX() - game->getRightPaddle()->getWidth() / 2 - width / 2
+			&& center_x <= game->getRightPaddle()->getX() - width / 2
+			&& center_y - width / 2 < game->getRightPaddle()->getY() + game->getRightPaddle()->getHeight() / 2
+			&& center_y + width / 2 > game->getRightPaddle()->getY() - game->getRightPaddle()->getHeight() / 2)
+		{
+			x_velocity = -abs(x_velocity);
+			y_velocity = (center_y - game->getRightPaddle()->getY()) / (game->getRightPaddle()->getHeight() / 4.0);
+		}
+		else if (center_x - width / 2 > game->getBoard()->getX() + game->getBoard()->getWidth())
+		{
+			// TODO Score left
+		}
 	}
-	//corners
-	if( ( center_y == ( game -> getLeftPaddle() -> getY() + ( width / 2 ) +
-		( game -> getLeftPaddle() -> getHeight() / 2 ) ) ||
-		center_y == ( game -> getLeftPaddle() -> getY() - ( width / 2 ) -
-		( game -> getLeftPaddle() -> getHeight() / 2 ) ) ) &&
-		( (center_x > game -> getLeftPaddle() -> getX() +
-		( game -> getLeftPaddle() -> getWidth() / 4 ) )&&
-		(center_x < game -> getLeftPaddle() -> getX() +
-		(( game -> getLeftPaddle() -> getWidth() /2) + (width / 2) ) ) ) )
+	else
 	{
-		x_velocity *= -1;
-		y_velocity *= -1;
+		if (center_x <= game->getLeftPaddle()->getX() + game->getLeftPaddle()->getWidth() / 2 + width / 2
+			&& center_x >= game->getLeftPaddle()->getX() + width / 2
+			&& center_y - width / 2 < game->getLeftPaddle()->getY() + game->getLeftPaddle()->getHeight() / 2
+			&& center_y + width / 2 > game->getLeftPaddle()->getY() - game->getLeftPaddle()->getHeight() / 2)
+		{
+			x_velocity = abs(x_velocity);
+			y_velocity = (center_y - game->getLeftPaddle()->getY()) / (game->getLeftPaddle()->getHeight() / 4.0);
+		}
+		else if (center_x + width / 2 < game->getBoard()->getX())
+		{
+			// TODO Score right
+		}
 	}
-
-	if( ( center_y == ( game -> getRightPaddle() -> getY() + ( width / 2 ) +
-		( game -> getRightPaddle() -> getHeight() / 2 ) ) ||
-		center_y == ( game -> getRightPaddle() -> getY() - ( width / 2 ) -
-		( game -> getRightPaddle() -> getHeight() / 2 ) ) ) &&
-		( (center_x < game -> getRightPaddle() -> getX() -
-		( game -> getRightPaddle() -> getWidth() / 4 ) )&&
-		(center_x > game -> getRightPaddle() -> getX() -
-		( ( game -> getRightPaddle() -> getWidth() /2 ) - (width / 2) ) ) ) )
-	{
-		x_velocity *= -1;
-		y_velocity *= -1;
-	}
+	
 
 }

@@ -10,14 +10,14 @@ class Ball;
 class Ball : public Drawable, public Steppable
 {
 	public:
-		int center_x;
-		int center_y;
+		double center_x;
+		double center_y;
 		int width;
 		double x_velocity;
 		double y_velocity;
 		PongGame* game;
 
-		Ball(PongGame* game, int x, int y, int width, double x_velocity, double y_velocity);
+		Ball(PongGame* game, double x, double y, int width, double x_velocity, double y_velocity);
 		void step();
 		void draw();
 };
