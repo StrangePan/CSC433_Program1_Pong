@@ -57,7 +57,7 @@ void Ball::step( )
 		}
 		else if (center_x - width / 2 > game->getBoard()->getX() + game->getBoard()->getWidth())
 		{
-			game -> scoreRight(); // TODO Score left
+			game -> scoreLeft(); // TODO Score left
 		}
 	}
 	else
@@ -72,7 +72,7 @@ void Ball::step( )
 		}
 		else if (center_x + width / 2 < game->getBoard()->getX())
 		{
-			game -> scoreLeft(); // TODO Score right
+			game -> scoreRight(); // TODO Score right
 		}
 	}
 	
