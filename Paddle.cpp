@@ -14,37 +14,13 @@ void Paddle::draw()
 
 void Paddle::step()
 {
-	if (up)
+	if( up || down )
 	{
-		center_y += 5;
-		if (center_y + height / 2 > maxy)
-		{
-			center_y = maxy - height / 2;
-		}
+		verticalMotion( 3 );
 	}
-	if (down)
+	if( left || right )
 	{
-		center_y -= 5;
-		if (center_y - height / 2 < miny)
-		{
-			center_y = miny + height / 2;
-		}
-	}
-	if (right)
-	{
-		center_x += 5;
-		if (center_x + width / 2 > maxx)
-		{
-			center_x = maxx - width / 2;
-		}
-	}
-	if (left)
-	{
-		center_x -= 5;
-		if (center_x - width / 2 < minx)
-		{
-			center_x = minx + width / 2;
-		}
+		horizontalMotion( 2 );
 	}
 };
 
@@ -66,3 +42,42 @@ int Paddle::getHeight()
 	return height;
 }
 
+void Paddle::verticalMotion( int speed )
+{
+	if (up)
+	{
+		center_y += speed;
+		if (center_y + height / 2 > maxy)
+		{
+			center_y = maxy - height / 2;
+		}
+	}
+	if (down)
+	{
+		center_y -= speed;
+		if (center_y - height / 2 < miny)
+		{
+			center_y = miny + height / 2;
+		}
+	}
+}
+
+void Paddle::horizontalMotion( int speed )
+{
+	if (right)
+	{
+		center_x += speed;
+		if (center_x + width / 2 > maxx)
+		{
+			center_x = maxx - width / 2;
+		}
+	}
+	if (left)
+	{
+		center_x -= speed;
+		if (center_x - width / 2 < minx)
+		{
+			center_x = minx + width / 2;
+		}
+	}
+}

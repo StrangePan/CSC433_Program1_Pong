@@ -28,6 +28,8 @@ class Paddle : public Drawable, public Steppable
 		
 		Paddle(PongGame* game, int x, int y, int width, int height, int maxx, int minx, int maxy, int miny);
 		void step();
+		void verticalMotion( int speed );
+		void horizontalMotion( int speed);
 
 		int getX();
 		int getY();
