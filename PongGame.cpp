@@ -3,7 +3,8 @@
 PongGame::PongGame() :
 		game_active(false), game_paused(false), board(NULL),
 		left_paddle(NULL), right_paddle(NULL), ball(NULL),
-		left_controller(NULL), right_controller(NULL)
+		left_controller(NULL), right_controller(NULL),
+		ball_timer(-1)
 {
 	Pong* pong = Pong::getInstance();
 	width = pong->getViewWidth();
@@ -40,6 +41,14 @@ void PongGame::step()
 	if (right_controller != NULL)
 	{
 		right_controller->step();
+	}
+	if (ball_timer == 0 && ball != NULL && ball->x_velocity == 0 && ball->y_velocity == 0)
+	{
+		serve();
+	}
+	if (ball_timer > -1)
+	{
+		ball_timer--;
 	}
 }
 
@@ -78,19 +87,24 @@ void PongGame::keySpecialUpEvent(int key)
 void PongGame::startGame(bool left_ai, bool right_ai)
 {
 	if (game_active) return;
+
+	this -> left_ai = left_ai;
+	this -> right_ai = right_ai;
+
 	reset();
 
 	game_active = true;
 	game_paused = false;
 
 	setBallSpeed( 5 );
-	ball = new (nothrow) Ball( this, width/2, height/2, 28, ball_speed, rand() % 8 - 4 );
+	ball = new (nothrow) Ball(this, 0, 0, 20, 0, 0);
+	resetBall();
 	Pong::getInstance() -> drawObject( ball, 1 );
 
 	if (left_ai)
 	{
 		left_controller = new AIController(left_paddle, ball);
-		getLeftPaddle() -> change_max_paddle_speed( .025, .0000000000001 );
+		getLeftPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 	else
 	{
@@ -101,13 +115,15 @@ void PongGame::startGame(bool left_ai, bool right_ai)
 	if (right_ai)
 	{
 		right_controller = new AIController(right_paddle, ball);
-		getRightPaddle() -> change_max_paddle_speed( .25, .25 );
+		getRightPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 	else
 	{
 		right_controller = new PlayerController(right_paddle, true);
 		getRightPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
+
+	updateDifficulty();
 }
 
 void PongGame::quitGame()
@@ -229,39 +245,101 @@ bool PongGame::isPaused()
 void PongGame::scoreLeft()
 {
 	left_score++;
-	if ( left_score > 9 )
+	if ( left_score == 10 )
 	{
 		// ToDo End Game
 	}
 	board -> setLeftText( to_string( left_score ) );
+	right_paddle_size = 8;
+	left_paddle_size = 8;
+	hit_count = 0;
+	right_paddle->setHeight(right_paddle_size * Pong::unit);
+	left_paddle->setHeight(left_paddle_size * Pong::unit);
+	right_paddle->verticalMotion(0);
+	left_paddle->verticalMotion(0);
+
+	updateDifficulty();
 	resetBall( );
 }
 
 void PongGame::scoreRight()
 {
 	right_score++;
-	if ( right_score > 9 )
+	if ( right_score == 10 )
 	{
 		// ToDo End Game
 	}
 	board -> setRightText( to_string( right_score ) );
-	resetBall();
+	right_paddle_size = 8;
+	left_paddle_size = 8;
+	hit_count = 0;
+	right_paddle->setHeight(right_paddle_size * Pong::unit);
+	left_paddle->setHeight(left_paddle_size * Pong::unit);
+	right_paddle->verticalMotion(0);
+	left_paddle->verticalMotion(0);
+
+	updateDifficulty();
+	resetBall( );
+}
+
+void PongGame::ballHit(bool right)
+{
+	hit_count++;
+	if (hit_count > 16 - (left_score + right_score) / 2)
+	{
+		if (right)
+		{
+			right_paddle_size--;
+		}
+		else
+		{
+			left_paddle_size--;
+		}
+	}
+	if (right_paddle_size < 3)
+	{
+		right_paddle_size = 3;
+	}
+	if (left_paddle_size < 3)
+	{
+		left_paddle_size = 3;
+	}
+	right_paddle->setHeight(right_paddle_size * Pong::unit);
+	left_paddle->setHeight(left_paddle_size * Pong::unit);
+}
+
+void PongGame::updateDifficulty()
+{
+	if (left_ai)
+	{
+		left_paddle->change_max_paddle_speed(2, 3 + (right_score - left_score) * 0.125);
+	}
+	if (right_ai)
+	{
+		right_paddle->change_max_paddle_speed(2, 3 + (left_score - right_score) * 0.125);
+	}
 }
 
 void PongGame::resetBall( )
 {
 	ball -> center_x = board -> getWidth() / 2;
 	ball -> center_y = board -> getHeight() / 2;
+	ball -> x_velocity = 0;
+	ball -> y_velocity = 0;
+	ball_timer = 60;
+}
+
+void PongGame::serve()
+{
 	if( (left_score + right_score) % 2 )
 	{
 		ball -> x_velocity = -ball_speed;
-		ball -> y_velocity = rand() % 8 - 4;
 	}
 	else
 	{
 		ball -> x_velocity = ball_speed;
-		ball -> y_velocity = rand() % 8 - 4;
 	}
+	ball -> y_velocity = (rand() % 11 - 5) / 2.0;
 }
 
 void PongGame::setBallSpeed( double speed )

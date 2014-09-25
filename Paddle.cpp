@@ -2,7 +2,8 @@
 
 Paddle::Paddle(PongGame* game, double x, double y, int width, int height, int maxx, int minx, int maxy, int miny) :
 		game(game), center_x(x), center_y(y), width(width), height(height),
-		up(false), down(false), left(false), right(false), maxx(maxx), minx(minx), maxy(maxy), miny(miny)
+		up(false), down(false), left(false), right(false), maxx(maxx), minx(minx), maxy(maxy), miny(miny),
+		horizontal_paddle_speed(4), vertical_paddle_speed(4)
 { }
 
 void Paddle::draw()
@@ -14,13 +15,21 @@ void Paddle::draw()
 
 void Paddle::step( )
 {
-	if( up || down )
+	if( up )
 	{
-		verticalMotion( 3 );
+		verticalMotion( vertical_paddle_speed );
 	}
-	if( left || right )
+	if( down )
 	{
-		horizontalMotion( 2 );
+		verticalMotion( -vertical_paddle_speed );
+	}
+	if( left )
+	{
+		horizontalMotion( -horizontal_paddle_speed );
+	}
+	if( right )
+	{
+		horizontalMotion( horizontal_paddle_speed );
 	}
 };
 
@@ -44,50 +53,65 @@ int Paddle::getHeight()
 
 void Paddle::verticalMotion( double speed )
 {
-	if (up)
+	if (speed > vertical_paddle_speed)
 	{
-		center_y += speed;
-		if (center_y + height / 2 > maxy)
-		{
-			center_y = maxy - height / 2;
-		}
+		speed = vertical_paddle_speed;
 	}
-	if (down)
+	if (speed < -vertical_paddle_speed)
 	{
-		center_y -= speed;
-		if (center_y - height / 2 < miny)
-		{
-			center_y = miny + height / 2;
-		}
+		speed = -vertical_paddle_speed;
 	}
-	return;
+	center_y += speed;
+	if (center_y + height / 2 > maxy)
+	{
+		center_y = maxy - height / 2;
+	}
+	if (center_y - height / 2 < miny)
+	{
+		center_y = miny + height / 2;
+	}
 }
 
 void Paddle::horizontalMotion( double speed )
 {
-	if (right)
+	if (speed > horizontal_paddle_speed)
 	{
-		center_x += speed;
-		if (center_x + width / 2 > maxx)
-		{
-			center_x = maxx - width / 2;
-		}
+		speed = horizontal_paddle_speed;
 	}
-	if (left)
+	if (speed < -horizontal_paddle_speed)
 	{
-		center_x -= speed;
-		if (center_x - width / 2 < minx)
-		{
-			center_x = minx + width / 2;
-		}
+		speed = -horizontal_paddle_speed;
 	}
-	return;
+	center_x += speed;
+	if (center_x + width / 2 > maxx)
+	{
+		center_x = maxx - width / 2;
+	}
+	if (center_x - width / 2 < minx)
+	{
+		center_x = minx + width / 2;
+	}
 }
 
 void Paddle::change_max_paddle_speed( double horizSpeed, double vertSpeed )
 {
-	horizontal_paddle_speed = horizSpeed;
-	vertical_paddle_speed = vertSpeed;
+	horizontal_paddle_speed = abs(horizSpeed);
+	vertical_paddle_speed = abs(vertSpeed);
+
+	if (horizontal_paddle_speed < 1)
+	{
+		horizontal_paddle_speed = 1;
+	}
+	if (vertical_paddle_speed < 1)
+	{
+		vertical_paddle_speed = 1;
+	}
+	
 	return;
+}
+
+void Paddle::setHeight(int height)
+{
+	this -> height = height;
 }
 

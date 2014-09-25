@@ -19,20 +19,9 @@ void AIController::step()
 {
 	if (ball != NULL)
 	{
-		if (paddle->getY() - ball->center_y >= 5)
+		if (paddle->getY() != ball->center_y)
 		{
-			paddle->down = true;
-			paddle->up = false;
-		}
-		else if (paddle->getY() - ball->center_y <= -5)
-		{
-			paddle->down = false;
-			paddle->up = true;
-		}
-		else
-		{
-			paddle->down = false;
-			paddle->up = false;
+			paddle->verticalMotion(ball->center_y - paddle->getY());
 		}
 	}
 }

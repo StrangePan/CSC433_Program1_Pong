@@ -10,6 +10,7 @@ using namespace std;
 #include <map>
 #include <list>
 #include <gl/freeglut.h>
+#include <time.h>
 
 #include "PongGame.h"
 #include "Drawable.h"

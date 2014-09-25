@@ -53,7 +53,8 @@ void Ball::step( )
 			&& center_y + width / 2 > game->getRightPaddle()->getY() - game->getRightPaddle()->getHeight() / 2)
 		{
 			x_velocity = -abs(x_velocity);
-			y_velocity = (center_y - game->getRightPaddle()->getY()) / (game->getRightPaddle()->getHeight() / 4.0);
+			y_velocity = (center_y - game->getRightPaddle()->getY()) / (game->getRightPaddle()->getHeight() / 12.0);
+			game->ballHit(true);
 		}
 		else if (center_x - width / 2 > game->getBoard()->getX() + game->getBoard()->getWidth())
 		{
@@ -68,7 +69,8 @@ void Ball::step( )
 			&& center_y + width / 2 > game->getLeftPaddle()->getY() - game->getLeftPaddle()->getHeight() / 2)
 		{
 			x_velocity = abs(x_velocity);
-			y_velocity = (center_y - game->getLeftPaddle()->getY()) / (game->getLeftPaddle()->getHeight() / 4.0);
+			y_velocity = (center_y - game->getLeftPaddle()->getY()) / (game->getLeftPaddle()->getHeight() / 12.0);
+			game->ballHit(false);
 		}
 		else if (center_x + width / 2 < game->getBoard()->getX())
 		{
