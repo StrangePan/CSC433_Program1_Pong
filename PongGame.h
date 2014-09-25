@@ -30,6 +30,7 @@ class PongGame : public Steppable
 		int height;
 		int x;
 		int y;
+		double ball_speed;
 
 		Board* board;
 		Paddle* left_paddle;
@@ -62,6 +63,7 @@ class PongGame : public Steppable
 		void scoreRight();
 		int getScore();
 		void resetBall();
+		void setBallSpeed( double speed );
 
 		Board* getBoard();
 		Paddle* getLeftPaddle();

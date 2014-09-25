@@ -12,12 +12,14 @@ class Paddle : public Drawable, public Steppable
 	private:
 		int height;
 		int width;
-		int center_x;
-		int center_y;
+		double center_x;
+		double center_y;
 		int maxx;
 		int minx;
 		int maxy;
 		int miny;
+		double vertical_paddle_speed;
+		double horizontal_paddle_speed;
 		PongGame* game;
 	
 	public:
@@ -26,13 +28,14 @@ class Paddle : public Drawable, public Steppable
 		bool left;
 		bool right;
 		
-		Paddle(PongGame* game, int x, int y, int width, int height, int maxx, int minx, int maxy, int miny);
+		Paddle(PongGame* game, double x, double y, int width, int height, int maxx, int minx, int maxy, int miny);
 		void step();
-		void verticalMotion( int speed );
-		void horizontalMotion( int speed);
+		void verticalMotion( double speed );
+		void horizontalMotion( double speed);
+		void change_max_paddle_speed( double horizSpeed, double vertSpeed );
 
-		int getX();
-		int getY();
+		double getX();
+		double getY();
 		int getWidth();
 		int getHeight();
 

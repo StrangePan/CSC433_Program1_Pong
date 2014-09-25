@@ -83,25 +83,30 @@ void PongGame::startGame(bool left_ai, bool right_ai)
 	game_active = true;
 	game_paused = false;
 
-	ball = new (nothrow) Ball( this, width/2, height/2, 28, 2, 1 );
+	setBallSpeed( 5 );
+	ball = new (nothrow) Ball( this, width/2, height/2, 28, ball_speed, rand() % 8 - 4 );
 	Pong::getInstance() -> drawObject( ball, 1 );
 
 	if (left_ai)
 	{
 		left_controller = new AIController(left_paddle, ball);
+		getLeftPaddle() -> change_max_paddle_speed( .025, .0000000000001 );
 	}
 	else
 	{
 		left_controller = new PlayerController(left_paddle, false);
+		getLeftPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 
 	if (right_ai)
 	{
 		right_controller = new AIController(right_paddle, ball);
+		getRightPaddle() -> change_max_paddle_speed( .25, .25 );
 	}
 	else
 	{
 		right_controller = new PlayerController(right_paddle, true);
+		getRightPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 }
 
@@ -248,7 +253,18 @@ void PongGame::resetBall( )
 	ball -> center_x = board -> getWidth() / 2;
 	ball -> center_y = board -> getHeight() / 2;
 	if( (left_score + right_score) % 2 )
-		ball -> x_velocity = -2;
+	{
+		ball -> x_velocity = -ball_speed;
+		ball -> y_velocity = rand() % 8 - 4;
+	}
 	else
-		ball -> x_velocity = 2;
+	{
+		ball -> x_velocity = ball_speed;
+		ball -> y_velocity = rand() % 8 - 4;
+	}
+}
+
+void PongGame::setBallSpeed( double speed )
+{
+	ball_speed = speed;
 }
