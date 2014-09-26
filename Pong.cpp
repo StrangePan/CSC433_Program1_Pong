@@ -10,7 +10,7 @@ Pong::Pong() :
 	if (instance == NULL)
 		instance = this;
 	game = new (nothrow) PongGame;
-	game -> startGame(true, true);
+	game -> startGame(false, true);
 }
 
 Pong::~Pong()
@@ -184,10 +184,11 @@ void Pong::reshape(int w, int h)
     glLoadIdentity();
 }
 
-void Pong::keyboard(unsigned char key, int x, int y)
+void Pong::keyDown(unsigned char key, int x, int y)
 {
 	// keypresses
 	const int EscapeKey = 27;
+	const int space = 32;
 	
     // correct for upside-down screen coordinates
     y = view_height - y;
@@ -201,16 +202,23 @@ void Pong::keyboard(unsigned char key, int x, int y)
             exit( 0 );
             break;
 
-        // anything else redraws window
+		case space:
+			if ( game -> isPaused() )
+			{
+				game -> resumeGame();
+			}
+			else
+			{
+				game -> pauseGame();
+			}
+			break;
+
+        // handles paddle movement
         default:
-            glutPostRedisplay();
+			game->keyDownEvent(key);
+            //glutPostRedisplay();
             break;
     }
-}
-
-void Pong::keyDown(unsigned char key, int x, int y)
-{
-	game->keyDownEvent(key);
 }
 void Pong::keyUp(unsigned char key, int x, int y)
 {
@@ -264,11 +272,6 @@ void display()
 void reshape(int w, int h)
 {
 	Pong::getInstance()->reshape(w, h);
-}
-
-void keyboard(unsigned char key, int x, int y)
-{
-	Pong::getInstance()->keyboard(key, x, y);
 }
 
 void keyDown(unsigned char key, int x, int y)
