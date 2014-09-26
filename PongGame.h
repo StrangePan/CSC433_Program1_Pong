@@ -34,6 +34,8 @@ class PongGame : public Steppable
 		int ball_timer;
 		int hit_count;
 
+		unsigned char* end_text;
+
 		Board* board;
 		Paddle* left_paddle;
 		Paddle* right_paddle;
@@ -68,6 +70,10 @@ class PongGame : public Steppable
 		void ballHit(bool right);
 		void resetBall();
 		void setBallSpeed( double speed );
+
+		void leftWins();
+		void rightWins();
+		void setEndText( string text );
 
 		Board* getBoard();
 		Paddle* getLeftPaddle();
