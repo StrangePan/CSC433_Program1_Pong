@@ -20,6 +20,7 @@ class PlayerController : public PaddleController
 		void keyUp(unsigned char key);
 		void keySpecialDown(int key);
 		void keySpecialUp(int key);
+		void ballHit();
 		void step();
 };
 

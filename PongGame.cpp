@@ -97,6 +97,7 @@ void PongGame::startGame(bool left_ai, bool right_ai)
 	game_paused = false;
 
 	setBallSpeed( 5 );
+	hit_count = 0;
 	ball = new (nothrow) Ball(this, 0, 0, 20, 0, 0);
 	resetBall();
 	Pong::getInstance() -> drawObject( ball, 1 );
@@ -306,6 +307,13 @@ void PongGame::ballHit(bool right)
 	}
 	right_paddle->setHeight(right_paddle_size * Pong::unit);
 	left_paddle->setHeight(left_paddle_size * Pong::unit);
+
+	if (right) {
+		right_controller->ballHit();
+	}
+	else {
+		left_controller->ballHit();
+	}
 }
 
 void PongGame::updateDifficulty()

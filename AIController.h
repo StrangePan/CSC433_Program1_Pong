@@ -12,6 +12,7 @@ class AIController : public PaddleController
 	private:
 		Paddle* paddle;
 		Ball* ball;
+		double offset;
 
 	public:
 		AIController(Paddle* paddle, Ball* ball);
@@ -20,6 +21,7 @@ class AIController : public PaddleController
 		void keyUp(unsigned char key);
 		void keySpecialDown(int key);
 		void keySpecialUp(int key);
+		void ballHit();
 		void step();
 };
 

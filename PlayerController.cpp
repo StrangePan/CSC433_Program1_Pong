@@ -100,5 +100,8 @@ void PlayerController::keySpecialUp(int key)
 	}
 }
 
+void PlayerController::ballHit()
+{ }
+
 void PlayerController::step()
 { }
