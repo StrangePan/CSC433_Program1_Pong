@@ -15,12 +15,14 @@ class Board : public Drawable
 		int border;
 		unsigned char* left_text;
 		unsigned char* right_text;
+		unsigned char* center_text;
 
 	public:
 		Board(int x, int y, int width, int height, int border);
 		~Board();
 		void setLeftText(string text);
 		void setRightText(string text);
+		void setCenterText( string text );
 
 		int getX();
 		int getY();
@@ -28,6 +30,8 @@ class Board : public Drawable
 		int getHeight();
 
 		void draw();
+
+
 };
 
 #endif

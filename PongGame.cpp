@@ -131,7 +131,14 @@ void PongGame::quitGame()
 {
 	if (!game_active) return;
 	game_active = false;
+	Pong::getInstance() -> stopDrawingObject( ball );
+	if (right_controller != NULL) delete right_controller;
+	if (left_controller != NULL) delete left_controller;
 	if (ball != NULL) delete ball;
+
+	right_controller = NULL;
+	left_controller = NULL;
+	ball = NULL;
 }
 
 void PongGame::pauseGame()
@@ -243,86 +250,67 @@ bool PongGame::isPaused()
 	return game_paused;
 }
 
+bool PongGame::isRunning()
+{
+	return game_active;
+}
+
 void PongGame::scoreLeft()
 {
 	left_score++;
+	board -> setLeftText( to_string( left_score ) );
 	if ( left_score == 10 )
 	{
 		leftWins();// ToDo End Game
+		quitGame();
 	}
-	board -> setLeftText( to_string( left_score ) );
-	right_paddle_size = 8;
-	left_paddle_size = 8;
-	hit_count = 0;
-	right_paddle->setHeight(right_paddle_size * Pong::unit);
-	left_paddle->setHeight(left_paddle_size * Pong::unit);
-	right_paddle->verticalMotion(0);
-	left_paddle->verticalMotion(0);
+	else
+	{
+		right_paddle_size = 8;
+		left_paddle_size = 8;
+		hit_count = 0;
+		right_paddle->setHeight(right_paddle_size * Pong::unit);
+		left_paddle->setHeight(left_paddle_size * Pong::unit);
+		right_paddle->verticalMotion(0);
+		left_paddle->verticalMotion(0);
 
-	updateDifficulty();
-	resetBall( );
-}
-
-void PongGame::leftWins()
-{
-	string text = "Left side Wins by " + to_string( left_score - right_score ) + " points";
-	setEndText( text );
-
-	Pong::getInstance() -> stopDrawingAll();
-	glPushMatrix();
-	glScalef( 0.25, 0.25, 1.0 );
-    glTranslated( (width / 2 ), (height ), 0);
-    glutStrokeString(GLUT_STROKE_ROMAN, end_text);
-    glPopMatrix();
+		updateDifficulty();
+		resetBall( );
+	}
 }
 
 void PongGame::scoreRight()
 {
 	right_score++;
+	board -> setRightText( to_string( right_score ) );
 	if ( right_score == 10 )
 	{
 		rightWins();// ToDo End Game
+		quitGame();
 	}
-	board -> setRightText( to_string( right_score ) );
-	right_paddle_size = 8;
-	left_paddle_size = 8;
-	hit_count = 0;
-	right_paddle->setHeight(right_paddle_size * Pong::unit);
-	left_paddle->setHeight(left_paddle_size * Pong::unit);
-	right_paddle->verticalMotion(0);
-	left_paddle->verticalMotion(0);
+	else
+	{
+		right_paddle_size = 8;
+		left_paddle_size = 8;
+		hit_count = 0;
+		right_paddle->setHeight(right_paddle_size * Pong::unit);
+		left_paddle->setHeight(left_paddle_size * Pong::unit);
+		right_paddle->verticalMotion(0);
+		left_paddle->verticalMotion(0);
 
-	updateDifficulty();
-	resetBall( );
+		updateDifficulty();
+		resetBall( );
+	}
+}
+
+void PongGame::leftWins()
+{
+	board -> setCenterText("Left side wins!");
 }
 
 void PongGame::rightWins( )
 {
-	string text = "Right side Wins by " + to_string( right_score - left_score ) + " points";
-	setEndText( text );
-
-	Pong::getInstance() -> stopDrawingAll();
-	glPushMatrix();
-	glScalef( 0.25, 0.25, 1.0 );
-    glTranslated( (width / 2), (height / 2), 0);
-    glutStrokeString(GLUT_STROKE_ROMAN, end_text);
-    glPopMatrix();
-}
-
-void PongGame::setEndText( string text )
-{
-	int i = 0;
-	end_text = new (nothrow) unsigned char[25];
-	for( i = 0; i < 25; i++)
-	{
-		end_text[i] = '\0';
-	}
-	for (unsigned int i = 0; i < text.size(); i++)
-	{
-		end_text[i] = (unsigned char) text[i];
-	};
-	end_text[text.size()] = '\0';
-
+	board -> setCenterText("Right side wins!");
 }
 
 void PongGame::ballHit(bool right)

@@ -10,7 +10,7 @@ Pong::Pong() :
 	if (instance == NULL)
 		instance = this;
 	game = new (nothrow) PongGame;
-	game -> startGame(false, true);
+	game -> startGame(false, false);
 }
 
 Pong::~Pong()
@@ -189,10 +189,6 @@ void Pong::keyDown(unsigned char key, int x, int y)
 	// keypresses
 	const int EscapeKey = 27;
 	const int space = 32;
-	
-    // correct for upside-down screen coordinates
-    y = view_height - y;
-    cerr << "keypress: " << key << " (" << int( key ) << ") at (" << x << "," << y << ")\n";
 
     // process keypresses
     switch ( key )
@@ -203,13 +199,20 @@ void Pong::keyDown(unsigned char key, int x, int y)
             break;
 
 		case space:
-			if ( game -> isPaused() )
+			if ( game -> isRunning() )
 			{
-				game -> resumeGame();
+				if ( game -> isPaused() )
+				{
+					game -> resumeGame();
+				}
+				else
+				{
+					game -> pauseGame();
+				}
 			}
 			else
 			{
-				game -> pauseGame();
+				game -> startGame(false, false);
 			}
 			break;
 
