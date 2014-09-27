@@ -28,6 +28,8 @@
  * for the right player. The space bar pauses the current game or restarts
  * the game after a player scores ten points. The escape key ends the game.
  *
+ * Glut and open GL are the programs that allow for gui management.
+ *
  * @section compile_section Compiling and Usage
  *
  * @par Compiling Instructions: 
