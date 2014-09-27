@@ -10,7 +10,7 @@ Pong::Pong() :
 	if (instance == NULL)
 		instance = this;
 	game = new (nothrow) PongGame;
-	game -> startGame(false, false);
+	game -> startGame(true, true);
 }
 
 Pong::~Pong()
