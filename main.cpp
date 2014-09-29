@@ -79,8 +79,8 @@
 
 #include "Pong.h"
 
-/**************************************************************************//** 
- * @author Dan Andrus
+/**************************************************************************//**
+ * @author Daniel Andrus
  * 
  * @par Description: 
  * This function priamarly passes control to the Pong class.
@@ -90,7 +90,6 @@
  * @param[out]     argv - An array of command line aurgments
  * 
  * @returns 0 program ran successfully.
- * 
  *****************************************************************************/
 int main( int argc, char *argv[] )
 {
