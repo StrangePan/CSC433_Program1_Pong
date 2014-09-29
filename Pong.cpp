@@ -84,7 +84,7 @@ int Pong::getDrawingLayer(Drawable* obj)
 
 int Pong::run( int argc, char *argv[] )
 {
-	srand(time(NULL));
+	srand((unsigned int) time(NULL));
 
 	// perform various OpenGL initializations
     glutInit( &argc, argv );

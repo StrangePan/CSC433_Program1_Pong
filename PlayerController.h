@@ -3,7 +3,7 @@
 
 class PlayerController;
 
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 #include "PaddleController.h"
 #include "Paddle.h"
 

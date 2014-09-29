@@ -6,7 +6,7 @@ using namespace std;
 #include <string>
 #include <map>
 #include <list>
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 #include <time.h>
 
 #include "PongGame.h"

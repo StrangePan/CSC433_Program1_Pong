@@ -1,7 +1,7 @@
 #ifndef _DRAWABLE_H_
 #define _DRAWABLE_H_
 
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 
 class Drawable
 {

@@ -9,7 +9,7 @@ Paddle::Paddle(PongGame* game, double x, double y, int width, int height, int ma
 void Paddle::draw()
 {
 	glColor3f( 1.0, 1.0, 1.0 );
-	glRectf( center_x - (width / 2), center_y -(height / 2), center_x
+	glRectd( center_x - (width / 2), center_y -(height / 2), center_x
 		+ (width / 2), center_y + (height / 2 ) );
 }
 
