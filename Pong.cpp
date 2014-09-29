@@ -1,20 +1,34 @@
+/***************************************************************************//**
+ * @file File containing the implementation of the Pong class.
+ *
+ * @brief Contains the implementation for the Pong class.
+*******************************************************************************/
+
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 #include "Pong.h"
 
 Pong* Pong::instance;
 const int Pong::unit = 16;
 
+/*******************************************************************************
+ *                          FUNCTION DEFINITIONS
+*******************************************************************************/
 Pong::Pong() :
 	view_width(32*unit), view_height(24*unit), window_width(view_width),
 	window_height(view_height), window_name("Pong")
 {
 	if (instance == NULL)
 		instance = this;
+
+	// Instanciate game manager
 	game = new (nothrow) PongGame;
-	game -> startGame(true, true);
 }
 
 Pong::~Pong()
 {
+	// Be sure to deallocate everything!
 	delete game;
 }
 
@@ -38,8 +52,11 @@ void Pong::drawObject(Drawable* obj, int layer)
 
 void Pong::stopDrawingObject(Drawable* obj)
 {
+	// For every later, remove reference to object. Don't bother searching.
 	typedef map<int, list<Drawable*>>::iterator it_type;
-	for (it_type iterator = drawables.begin(); iterator != drawables.end(); iterator++)
+	for (it_type iterator = drawables.begin();
+		iterator != drawables.end();
+		iterator++)
 	{
 		iterator->second.remove(obj);
 	}
@@ -52,24 +69,30 @@ void Pong::stopDrawingAll()
 
 bool Pong::isDrawingObject(Drawable* obj)
 {
+	// Loop through every later and every object in that row until we find obj
 	typedef map<int, list<Drawable*>>::iterator it_type;
-	for (it_type iterator = drawables.begin(); iterator != drawables.end(); iterator++)
+	for (it_type iterator = drawables.begin();
+		iterator != drawables.end();
+		iterator++)
 	{
 		for (Drawable* d : iterator->second)
 		{
 			if (d == obj)
 			{
-				return true;
+				return true;	// Found it!
 			}
 		}
 	}
-	return false;
+	return false;	// Didn't find it :(
 }
 
 int Pong::getDrawingLayer(Drawable* obj)
 {
+	// Loop through every later and every object in that row until we find obj
 	typedef map<int, list<Drawable*>>::iterator it_type;
-	for (it_type iterator = drawables.begin(); iterator != drawables.end(); iterator++)
+	for (it_type iterator = drawables.begin();
+		iterator != drawables.end();
+		iterator++)
 	{
 		for (Drawable* d : iterator->second)
 		{
@@ -79,7 +102,7 @@ int Pong::getDrawingLayer(Drawable* obj)
 			}
 		}
 	}
-	return 0;
+	return 0;	// If object is not found, return default value of 0.
 }
 
 int Pong::run( int argc, char *argv[] )
@@ -89,6 +112,7 @@ int Pong::run( int argc, char *argv[] )
 	// perform various OpenGL initializations
     glutInit( &argc, argv );
 
+	// Put window in center of screen
 	int w = glutGet(GLUT_SCREEN_WIDTH);
 	int h = glutGet(GLUT_SCREEN_HEIGHT);
 	if (w != 0 && h != 0)
@@ -97,30 +121,32 @@ int Pong::run( int argc, char *argv[] )
 		h = h / 2 - view_height / 2;
 	}
 
-    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_MULTISAMPLE );     // 32-bit graphics and single buffering
+	// Initialize glut with 32-bit graphics, double buffering, and anti-aliasing
+    glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_MULTISAMPLE );
 
+	// Set up the program window
     glutInitWindowSize( view_width, view_height);    // initial window size
     glutInitWindowPosition( w, h );                  // initial window position
-    glutCreateWindow( window_name.c_str() );                  // window title
+    glutCreateWindow( window_name.c_str() );         // window title
 
-    glClearColor( 0, 0, 0, 1.0 );                 // use black for glClear command
+	// Always clear screen to black
+	glClearColor( 0, 0, 0, 1.0 );
 
 	glutIgnoreKeyRepeat(1);
 
-    // callback routines
-    glutDisplayFunc( *::display );                         // how to redisplay window
-    glutReshapeFunc( *::reshape );                         // how to resize window
-    glutKeyboardFunc( *::keyDown );                       // how to handle key presses
+    // Register callbacks
+    glutDisplayFunc( *::display );
+    glutReshapeFunc( *::reshape );
+    glutKeyboardFunc( *::keyDown );
 	glutKeyboardUpFunc( *::keyUp );
 	glutSpecialFunc( *::keySpecialDown );
 	glutSpecialUpFunc( *::keySpecialUp );
-    glutMouseFunc( *::mouseclick );                        // how to handle mouse events
+    glutMouseFunc( *::mouseclick );
 	glutTimerFunc(0, *::step, 0);
 
-    // go into OpenGL/GLUT main loop, never to return
+    // Go into OpenGL/GLUT main loop
     glutMainLoop();
 
-    // yeah I know, but it keeps compilers from bitching
     return 0;
 
 }
@@ -143,7 +169,9 @@ void Pong::display()
     
 	// Draw all registered drawables
 	typedef map<int, list<Drawable*>>::iterator it_type;
-	for (it_type iterator = drawables.begin(); iterator != drawables.end(); iterator++)
+	for (it_type iterator = drawables.begin();
+		iterator != drawables.end();
+		iterator++)
 	{
 		for (Drawable* d : iterator->second)
 		{
@@ -151,7 +179,7 @@ void Pong::display()
 		}
 	}
 
-	// flush graphical output
+	// Flush graphical output
     glutSwapBuffers();
     glFlush();
 }
@@ -164,41 +192,41 @@ void Pong::reshape(int w, int h)
 	double ratio = (double) view_width / (double) view_height;
 	double scale;
 
-    // orthographic projection of 3-D scene onto 2-D, maintaining aspect ratio
-    glMatrixMode( GL_PROJECTION );      // use an orthographic projection
-    glLoadIdentity();                   // initialize transformation matrix
-	if (w > h * ratio)                  // use width:height aspect ratio to specify view extents
+    // Orthographic projection of 3-D scene onto 2-D, maintaining aspect ratio
+    glMatrixMode( GL_PROJECTION );		// Use an orthographic projection
+    glLoadIdentity();					// Initialize transformation matrix
+	if (w > h * ratio)					// Adjust viewport based on ratio
 	{
 		scale = (double) h / (double) view_height;
-		gluOrtho2D( 0 - ((w / scale) - view_width) / 2, view_width + ((w / scale) - view_width) / 2, 0, view_height );
+		gluOrtho2D( 0 - ((w / scale) - view_width) / 2,
+			view_width + ((w / scale) - view_width) / 2,
+			0,
+			view_height );
 	}
 	else
 	{
 		scale = (double) w / (double) view_width;
-		gluOrtho2D( 0, view_width, 0 - ((h / scale) - view_height) / 2, view_height + ((h / scale) - view_height) / 2 );
+		gluOrtho2D( 0,
+			view_width,
+			0 - ((h / scale) - view_height) / 2,
+			view_height + ((h / scale) - view_height) / 2 );
 	}
-    glViewport( 0, 0, w, h );           // adjust viewport to new window
+    glViewport( 0, 0, w, h );			// Adjust viewport to new window
 
-    // switch back to (default) model view mode, for transformations
+    // Switch back to (default) model view mode, for transformations
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 }
 
 void Pong::keyDown(unsigned char key, int x, int y)
 {
-	// keypresses
-	const int EscapeKey = 27;
-	const int space = 32;
-
-    // process keypresses
     switch ( key )
     {
-	    // Escape quits program
-        case EscapeKey:
+        case 27:		// Escape
             exit( 0 );
             break;
 
-		case space:
+		case 32:		// Space
 			if ( game -> isRunning() )
 			{
 				if ( game -> isPaused() )
@@ -216,10 +244,8 @@ void Pong::keyDown(unsigned char key, int x, int y)
 			}
 			break;
 
-        // handles paddle movement
-        default:
+        default:		// Everything else, forward to game manager
 			game->keyDownEvent(key);
-            //glutPostRedisplay();
             break;
     }
 }
@@ -238,34 +264,25 @@ void Pong::keySpecialUp(int key, int x, int y)
 
 void Pong::mouseclick(int button, int state, int x, int y)
 {
-	// correct for upside-down screen coordinates
+	// Correct for coordinate system
     y = view_height - y;
 
-    // handle mouse click events
     switch ( button )
     {
-        case GLUT_LEFT_BUTTON:              // left button
-            if ( state == GLUT_DOWN )           // press
-                cerr << "mouse click: left press at    (" << x << "," << y << ")\n";
-            else if ( state == GLUT_UP )        // release
-                cerr << "mouse click: left release at  (" << x << "," << y << ")\n";
+        case GLUT_LEFT_BUTTON:		// left button
             break;
 
-        case GLUT_RIGHT_BUTTON:             // right button
-            if ( state == GLUT_DOWN )           // press
-                cerr << "mouse click: right press at   (" << x << "," << y << ")\n";
-            else if ( state == GLUT_UP )        // release
-                cerr << "mouse click: right release at (" << x << "," << y << ")\n";
+		case GLUT_RIGHT_BUTTON:		// right button
             break;
     }
+
+	// Yeah... we don't do much in this function yet. We have plans though!
 }
 
 void Pong::step()
 {
 	game->step();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void display()
 {
@@ -304,8 +321,15 @@ void mouseclick(int button, int state, int x, int y)
 
 void step(int i)
 {
+	// FPS, or technically "milliseconds per frame"
 	static unsigned int fps_delay = 1000 / 60;
+	
+	// Reset the timer
 	glutTimerFunc(fps_delay, *::step, 0);
+	
+	// Call step function
 	Pong::getInstance()->step();
+
+	// Redraw the screen after frame's been processed.
 	glutPostRedisplay();
 }
