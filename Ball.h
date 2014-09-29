@@ -3,6 +3,7 @@
 
 class Ball;
 
+#include <cmath>
 #include "Drawable.h"
 #include "Steppable.h"
 #include "PongGame.h"
