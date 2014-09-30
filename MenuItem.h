@@ -22,6 +22,9 @@ private:
 
 public:
 	void draw();
+	void setPosition( double new_x, double new_y );
+	void setText( string new_text );
+	void getClicked( );
 };
 
 #endif

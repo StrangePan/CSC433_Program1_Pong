@@ -26,6 +26,8 @@ private:
 
 public:
 	void draw();
+	void setPosition( double new_x, double new_y );
+	void setTitle( string new_title );
 
 };
 
