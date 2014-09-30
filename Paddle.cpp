@@ -1,4 +1,17 @@
+/***************************************************************************//**
+ * @file File containing the implementation of the Paddle Class
+ *
+ * @brief Functions handel paddle movement, speed, and size.
+*******************************************************************************/
+
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 #include "Paddle.h"
+
+/*******************************************************************************
+ *                          FUNCTION DEFINITIONS
+*******************************************************************************/
 
 /**************************************************************************//**
  * @author Daniel Andrus
@@ -225,10 +238,10 @@ void Paddle::change_max_paddle_speed( double horizSpeed, double vertSpeed )
  * @author Daniel Andrus, Johnny Ackerman
  * 
  * @par Description: 
- * retrieves the height of the paddle
+ * changes the height of the paddle
  * 
  * 
- * @param[in]      int height - the total height of the paddle
+ * @param[in]      int height - the new height of the paddle
  *****************************************************************************/
 void Paddle::setHeight(int height)
 {
