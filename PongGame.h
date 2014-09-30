@@ -1,6 +1,15 @@
+/***************************************************************************//**
+ * @file File containing the declaration for the PongGame class.
+ *
+ * @brief Contains the declaration for the PongGame class, the class that
+ *		manages all aspects of games
+*******************************************************************************/
 #ifndef _PONGGAME_H_
 #define _PONGGAME_H_
 
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 class PongGame;
 
 #include <list>
@@ -10,24 +19,21 @@ class PongGame;
 #include "Paddle.h"
 #include "Ball.h"
 #include "Steppable.h"
-
 #include "AIController.h"
 #include "PlayerController.h"
 #include "PaddleController.h"
 
 using namespace std;
 
-/*! 
+/***************************************************************************//**
  * @brief The PongGame Class runs the entire game of pong, It is in charge
  *		of all parts of the game logic.
  *
- * @details PongGame determines whether the game is pause, it restarts the
+ * @details PongGame determines whether the game is paused, restarts the
  *		game if space is pressed on the end screen. The only thing it 
- *		doesn't do is handle the drawing of the parts. That is handle up
- *		from the class that needs something drawn to the Pong class, and
- *		then to the drawable class.
- *
- */ 
+ *		doesn't do is handle the drawing of the parts and collision detection.
+ *		It does, however, handle most input events and does event handling.
+*******************************************************************************/
 class PongGame : public Steppable
 {
 	private:
@@ -41,16 +47,16 @@ class PongGame : public Steppable
 		int height;	/*!< View_hieght from Pong.h */
 		double ball_speed;	/*!< The x velocity of the ball */
 		int ball_timer;	/*!< timer before ball is served */
-		int hit_count;	/*!< amount of times a paddle has been hit by the ball */
+		int hit_count;	/*!< amount of times the ball has hit a paddle */
 
 		Board* board;	/*!< instance of the board class */
 		Paddle* left_paddle;	/*!< instance of paddle on the left side */
 		Paddle* right_paddle;	/*!< right instance of paddle */
 		Ball* ball;	/*!< Stores the comment */
 
-		PaddleController* left_controller;	/*!< instance of class that controls the
+		PaddleController* left_controller;	/*!< the object that controls the
 												left paddle*/
-		PaddleController* right_controller;	/*!< instance of class that controls the
+		PaddleController* right_controller;	/*!< the object that controls the
 												right paddle*/
 
 		int left_paddle_size;	/*!< height of the left paddle */
@@ -154,12 +160,6 @@ class PongGame : public Steppable
 		 *  @brief resets the ball after a score
 		 */
 		void resetBall();
-
-		/*!
-		 *  @brief Sets the speed of the ball
-		 */
-		void setBallSpeed( double speed );
-
 
 		/*!
 		 *  @brief quits the game and outputs "Left Side Wins"

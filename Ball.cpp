@@ -3,8 +3,15 @@
  *
  * @brief Contains the implementation for the Ball class.
 *******************************************************************************/
+
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 #include "Ball.h"
 
+/*******************************************************************************
+ *                          FUNCTION DEFINITIONS
+*******************************************************************************/
 /**************************************************************************//** 
  * @author Johnathan Ackerman, Daniel Andrus
  * 
@@ -25,9 +32,9 @@ Ball::Ball(PongGame* game, double x, double y, int width,
 { }
 
 /**************************************************************************//** 
- * @author Johnathan Ackerman
+ * @author Johnathan Ackerman, Daniel Andrus
  * 
- * @par Description: moves the ball across the game grid
+ * @par Description: moves the ball across the game grid & handle collisions
  *****************************************************************************/
 void Ball::step( )
 {	
@@ -165,7 +172,7 @@ double Ball::getSpeedModifier()
 /**************************************************************************//** 
  * @author Johnathan Ackerman, Daniel Andrus
  * 
- * @par Description: Draws the ball with class information
+ * @par Description: Draws the ball, including motion blur effect
  *****************************************************************************/
 void Ball::draw( )
 {

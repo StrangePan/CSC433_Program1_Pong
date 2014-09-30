@@ -10,8 +10,6 @@
 /*******************************************************************************
  *                 DECLARATIONS, INCLUDES, AND NAMESPACES
 *******************************************************************************/
-using namespace std;
-
 class Pong;
 
 #include <iostream>
@@ -22,6 +20,8 @@ class Pong;
 #include <time.h>
 #include "PongGame.h"
 #include "Drawable.h"
+
+using namespace std;
 
 /***************************************************************************//**
  * @brief The Pong Class is in charge of window management, drawing

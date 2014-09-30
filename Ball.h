@@ -6,12 +6,17 @@
 #ifndef _BALL_H_
 #define _BALL_H_
 
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 class Ball;
 
 #include <cmath>
 #include "Drawable.h"
 #include "Steppable.h"
 #include "PongGame.h"
+
+using namespace std;
 
 /***************************************************************************//**
  * @brief The Ball Class Holds all the information to draw a ball for Pong
@@ -36,7 +41,8 @@ class Ball : public Drawable, public Steppable
 		 *  @brief The constructor, creates the ball with location, size, and
 		 *			speed
 		 */
-		Ball(PongGame* game, double x, double y, int width, double x_velocity, double y_velocity);
+		Ball(PongGame* game, double x, double y,
+			int width, double x_velocity, double y_velocity);
 
 		/*!
 		 *  @brief Handles the ball movement
