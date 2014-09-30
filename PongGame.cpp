@@ -54,10 +54,30 @@ void PongGame::step()
 
 void PongGame::keyDownEvent(unsigned char key)
 {
+	// Forward event to paddle controllers (aka players)
 	if (left_controller != NULL)
 		left_controller->keyDown((char) key);
 	if (right_controller != NULL)
 		right_controller->keyDown((char) key);
+
+	// Adjust ball speed
+	if (ball != NULL && !game_paused)
+	{
+		if (key == '-' || key == '_')
+		{
+			ball->setSpeedModifier(ball->getSpeedModifier() - 0.25);
+		}
+		if (key == '=' || key == '+')
+		{
+			ball->setSpeedModifier(ball->getSpeedModifier() + 0.25);
+
+			// Apply governor to ball speed. Too much, and we may lose it.
+			if (ball->getSpeedModifier() > 2.0)
+			{
+				ball->setSpeedModifier(2.0);
+			}
+		}
+	}
 }
 
 void PongGame::keyUpEvent(unsigned char key)
@@ -105,24 +125,29 @@ void PongGame::startGame(bool left_ai, bool right_ai)
 	if (left_ai)
 	{
 		left_controller = new AIController(left_paddle, ball);
-		getLeftPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 	else
 	{
 		left_controller = new PlayerController(left_paddle, false);
-		getLeftPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 
 	if (right_ai)
 	{
 		right_controller = new AIController(right_paddle, ball);
-		getRightPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
 	else
 	{
 		right_controller = new PlayerController(right_paddle, true);
-		getRightPaddle() -> change_max_paddle_speed( 2, 3 );
 	}
+	
+	if (left_ai && right_ai)
+	{
+		board->setLeftText("");
+		board->setRightText("");
+	}
+
+	getLeftPaddle() -> change_max_paddle_speed( 2, 3 );
+	getRightPaddle() -> change_max_paddle_speed( 2, 3 );
 
 	updateDifficulty();
 }
@@ -220,9 +245,9 @@ void PongGame::reset()
 	board->setLeftText(to_string(left_score));
 
 	// Register game elements with drawing system
-	Pong::getInstance()->drawObject(board);
-	Pong::getInstance()->drawObject(left_paddle, 1);
-	Pong::getInstance()->drawObject(right_paddle, 1);
+	Pong::getInstance()->drawObject(board, 0);
+	Pong::getInstance()->drawObject(left_paddle, 2);
+	Pong::getInstance()->drawObject(right_paddle, 2);
 }
 
 Board* PongGame::getBoard()
@@ -257,49 +282,67 @@ bool PongGame::isRunning()
 
 void PongGame::scoreLeft()
 {
-	left_score++;
-	board -> setLeftText( to_string( left_score ) );
+	// If a player is playing, then keep track of score.
+	if (!left_ai || !right_ai)
+	{
+		left_score++;
+		board->setLeftText(to_string(left_score));
+	}
+
+	// Reset variables and paddle status
+	hit_count = 0;
+	right_paddle_size = 8;
+	left_paddle_size = 8;
+	right_paddle->setHeight(right_paddle_size * Pong::unit);
+	left_paddle->setHeight(left_paddle_size * Pong::unit);
+
+	// Since paddles could be outside border, move 0 px to fix position
+	right_paddle->verticalMotion(0);
+	left_paddle->verticalMotion(0);
+
+	// Check if we have a winner
 	if ( left_score == 10 )
 	{
-		leftWins();// ToDo End Game
+		leftWins();
 		quitGame();
 	}
 	else
 	{
-		right_paddle_size = 8;
-		left_paddle_size = 8;
-		hit_count = 0;
-		right_paddle->setHeight(right_paddle_size * Pong::unit);
-		left_paddle->setHeight(left_paddle_size * Pong::unit);
-		right_paddle->verticalMotion(0);
-		left_paddle->verticalMotion(0);
-
 		updateDifficulty();
-		resetBall( );
+		resetBall();
 	}
 }
 
 void PongGame::scoreRight()
 {
-	right_score++;
-	board -> setRightText( to_string( right_score ) );
+	// If a player is playing, then keep track of score.
+	if (!left_ai || !right_ai)
+	{
+		right_score++;
+		board->setRightText(to_string(right_score));
+	}
+
+	// Reset variables and paddle status
+	hit_count = 0;
+	right_paddle_size = 8;
+	left_paddle_size = 8;
+	right_paddle->setHeight(right_paddle_size * Pong::unit);
+	left_paddle->setHeight(left_paddle_size * Pong::unit);
+
+	// Since paddles could be outside border, move 0 px to fix position
+	right_paddle->verticalMotion(0);
+	left_paddle->verticalMotion(0);
+
+	// Check if we have a winner
 	if ( right_score == 10 )
 	{
-		rightWins();// ToDo End Game
+		rightWins();
 		quitGame();
 	}
 	else
 	{
-		right_paddle_size = 8;
-		left_paddle_size = 8;
-		hit_count = 0;
-		right_paddle->setHeight(right_paddle_size * Pong::unit);
-		left_paddle->setHeight(left_paddle_size * Pong::unit);
-		right_paddle->verticalMotion(0);
-		left_paddle->verticalMotion(0);
-
 		updateDifficulty();
-		resetBall( );
+		resetBall();
 	}
 }
 

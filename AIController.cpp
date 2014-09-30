@@ -67,7 +67,7 @@ void AIController::keySpecialUp(int key)
 *******************************************************************************/
 void AIController::ballHit()
 {
-	offset = (rand() % paddle->getHeight() - (paddle -> getHeight() / 2)) * 0.9;
+	offset = (rand() % 3 * Pong::unit - (3 * Pong::unit / 2)) * 0.8;
 }
 
 /***************************************************************************//**
@@ -80,7 +80,7 @@ void AIController::step()
 {
 	if (ball != NULL)		// This is entirely a possibility
 	{
-		if (paddle->getY() != ball->center_y)
+		if (paddle->getY() + offset != ball->center_y)
 		{
 			paddle->verticalMotion(ball->center_y - (paddle->getY() + offset));
 		}

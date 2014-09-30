@@ -80,6 +80,9 @@ int Pong::run( int argc, char *argv[] )
 {
 	srand((unsigned int) time(NULL));
 
+	// Start the game
+	game->startGame(true, true);
+
 	// perform various OpenGL initializations
     glutInit( &argc, argv );
 

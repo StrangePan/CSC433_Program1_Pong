@@ -54,8 +54,6 @@
  * @section todo_bugs_modification_section Todo, Bugs, and Modifications
  * 
  * @todo add a menu
- * @todo add speed controls '+ -'
- * @todo change Pong bounch physics
  * 
  * @par Modifications and Development Timeline: 
    @verbatim 
@@ -73,6 +71,7 @@
    09-25-2014	Much improvement to the AI.
    09-26-2014	Clean ups and improvements.
    09-29-2014	Added compatability with Linux.
+   09-30-2014	Added adjustable ball speeds & changed bouncing physics
    @endverbatim
  *
  *****************************************************************************/
