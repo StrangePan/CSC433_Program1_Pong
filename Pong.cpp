@@ -341,6 +341,7 @@ void Pong::keyDown(unsigned char key, int x, int y)
     switch ( key )
     {
         case 27:		// Escape
+			game -> quitGame();
             exit( 0 );
             break;
 

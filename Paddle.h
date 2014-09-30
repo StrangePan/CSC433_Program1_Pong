@@ -17,23 +17,23 @@ class Paddle;
 class Paddle : public Drawable, public Steppable
 {
 	private:
-		int height;
-		int width;
-		double center_x;
-		double center_y;
-		int maxx;
-		int minx;
-		int maxy;
-		int miny;
-		double vertical_paddle_speed;
-		double horizontal_paddle_speed;
-		PongGame* game;
+		int height;	/*!< Height of paddle */
+		int width;	/*!< eidth of paddle */
+		double center_x;	/*!< Center x coordinate of paddle */
+		double center_y;	/*!< y coordinate for center of paddle */
+		int maxx;	/*!< Max x possition */
+		int minx;	/*!< min x possition */
+		int maxy;	/*!< max y possition */
+		int miny;	/*!< min y possition */
+		double vertical_paddle_speed;	/*!< speed paddle moves left or right*/
+		double horizontal_paddle_speed;	/*!< Paddle speed up or down */
+		PongGame* game;	/*!< instance of PongGame class */
 	
 	public:
-		bool up;
-		bool down;
-		bool left;
-		bool right;
+		bool up;	/*!< whether or not the paddle is moving up */
+		bool down;	/*!< whether or not the paddle is moving down */
+		bool left;	/*!< whether or not the paddle is moving left */
+		bool right;	/*!< whether or not the paddle is moving right */
 		
 		/*!
 		 *  @brief The constructor, creates a paddle with position, size, and
