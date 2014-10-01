@@ -16,13 +16,15 @@
  * @author Daniel Andrus
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Creates a menu with size, postion, and list of menuItems
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      double x - left Most x component of the Menu
+ * @param[in]      double y - bottom Most y component of the Menu
+ * @param[in]      double width - total width of Menu
+ * @param[in]      double height - total height of Menu
+ * @param[in]      double border - thickness of the border
+ * @param[in]      string title	- name given to border
  *****************************************************************************/
 Menu::Menu(double x, double y, double width, double height, double border, string title) :
 		x(x), y(y), width(width), height(height), border(border), title(0,0,0)
@@ -37,13 +39,7 @@ Menu::Menu(double x, double y, double width, double height, double border, strin
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
- * 
- * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * Deletes list of menu Items
  *****************************************************************************/
 Menu::~Menu()
 {
@@ -54,13 +50,11 @@ Menu::~Menu()
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Sets the bottom left possition of the Menu
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      double x - left most x coordinant
+ * @param[in]      double y - bottom most y coordinant
  *****************************************************************************/
 void Menu::setPosition( double x, double y )
 {
@@ -74,13 +68,11 @@ void Menu::setPosition( double x, double y )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Sets the Size of the Menu
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      double width - total width of Menu
+ * @param[in]      double height - total height of Menu
  *****************************************************************************/
 void Menu::setSize( double width, double height )
 {
@@ -94,13 +86,10 @@ void Menu::setSize( double width, double height )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Sets the Title of the Menu
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      string title - The new Title
  *****************************************************************************/
 void Menu::setTitle( string title )
 {
@@ -111,13 +100,10 @@ void Menu::setTitle( string title )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Adds a new Menu Item to list
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      MenuItem* item - New Item to be added
  *****************************************************************************/
 void Menu::addItem(MenuItem* item)
 {
@@ -128,13 +114,10 @@ void Menu::addItem(MenuItem* item)
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Sets the border Thickness
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      double border - New Border Thickness
  *****************************************************************************/
 void Menu::setBorder( double border )
 {
@@ -147,13 +130,13 @@ void Menu::setBorder( double border )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * founction determines which menu Item was pressed
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      int button - which mouse button was pressed
+ * @param[in]      int state - whether the button is still pressed
+ * @param[in]      int x - x coordinant of the mouse
+ * @param[in]      int y - y coordinant of the mouse
  *****************************************************************************/
 void Menu::click( int button, int state, int x, int y )
 {
@@ -167,13 +150,7 @@ void Menu::click( int button, int state, int x, int y )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
- * 
- * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * Draws the given Menu
  *****************************************************************************/
 void Menu::draw()
 {
@@ -187,7 +164,7 @@ void Menu::draw()
 	
 	// Draw black background
 	glColor3d( 0.0, 0.0, 0.0 );
-    glRectd( x + border, y + border, x + width - border * 2, y + height - border * 2);
+    glRectd( x + border, y + border, x + width - border, y + height - border);
     
     // Draw title and menu items
 	glColor3d( 1.0, 1.0, 1.0 );
@@ -202,13 +179,7 @@ void Menu::draw()
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
- * 
- * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * Clears all Menu Items in the List
  *****************************************************************************/
 void Menu::clear()
 {
