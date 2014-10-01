@@ -276,6 +276,100 @@ Menu* Pong::getMenu()
 /***************************************************************************//**
  * @author Daniel Andrus
  * 
+ * @par Description: Displays the game menu
+*******************************************************************************/
+void Pong::displayMenu()
+{
+	if (menu != NULL) return;
+
+	// Set up the variables
+	MenuItem* item;
+	double item_x = view_width / 2 - unit * 10;
+	double item_y = view_height / 2 + unit * 1;
+	double item_w = unit * 20;	// width
+	double item_h = unit * 4;	// height
+	double item_b = unit / 2;	// border
+	double item_p = unit / 2;	// padding
+	double item_m = unit / 2;	// margin
+	
+	// Build menu
+	menu = new (nothrow) Menu(0, 0, 0, 0, Pong::unit / 2, "");
+	menu -> setSize( unit * 22, unit * 18 );
+	menu -> setPosition( view_width / 2 - unit * 11, view_height / 2 - unit * 9 );
+	drawObject(menu, 3);
+	
+	// Set menu title
+	if (game -> isDemo() || !game -> isRunning())
+	{
+		menu -> setTitle( "Main Menu" );
+	}
+	else
+	{
+		menu -> setTitle( "Pause" );
+	}
+	
+	// Build each menu item
+	// MenuItem(Menu* menu, double x, double y, double width, double height, string text, function<void ()> callback = [](){});
+	
+	// Continue/start game item(s)
+	if (game -> isDemo() || !game -> isRunning())
+	{
+		// Single player game
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Solo Game");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> quitGame();
+			Pong::getInstance() -> getGame() -> startGame(true, false);
+			Pong::getInstance() -> closeMenu();
+		});
+		menu -> addItem(item);
+		item_y -= item_h + item_m;
+		
+		// Multiplayer game
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Versus Game");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> quitGame();
+			Pong::getInstance() -> getGame() -> startGame(false, false);
+			Pong::getInstance() -> closeMenu();
+		});
+		menu -> addItem(item);
+		item_y -= item_h + item_m;
+	}
+	else
+	{
+		// Continue
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Continue");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> resumeGame();
+			Pong::getInstance() -> closeMenu();
+		});
+		menu -> addItem(item);
+		item_y -= item_h + item_m;
+
+		// Quit Game
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Quit Game");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> quitGame();
+			Pong::getInstance() -> getGame() -> startGame(true, true);
+			Pong::getInstance() -> closeMenu();
+			Pong::getInstance() -> displayMenu();
+		});
+		menu -> addItem(item);
+		item_y -= item_h + item_m;
+	}
+	
+	// Quit Pong
+	item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Quit Pong");
+	item -> setAction([](){
+		exit(0);
+	});
+	menu -> addItem(item);
+	item_y -= item_h + item_m;
+	
+}
+
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
  * @par Description: Closes any open menus
 *******************************************************************************/
 void Pong::closeMenu()
@@ -503,99 +597,6 @@ void Pong::mouseclick(int button, int state, int x, int y)
 void Pong::step()
 {
 	game->step();
-}
-
-/***************************************************************************//**
- * @author Daniel Andrus
- * 
- * @par Description: Displays the game menu
-*******************************************************************************/
-void Pong::displayMenu()
-{
-	if (menu != NULL) return;
-
-	// Set up the variables
-	MenuItem* item;
-	double item_x = view_width / 2 - unit * 10;
-	double item_y = view_height / 2 + unit * 1;
-	double item_w = unit * 20;	// width
-	double item_h = unit * 4;	// height
-	double item_b = unit / 2;	// border
-	double item_p = unit / 2;	// padding
-	double item_m = unit / 2;	// margin
-	
-	// Build menu
-	menu = new (nothrow) Menu(0, 0, 0, 0, Pong::unit / 2, "");
-	menu -> setSize( unit * 22, unit * 18 );
-	menu -> setPosition( view_width / 2 - unit * 11, view_height / 2 - unit * 9 );
-	drawObject(menu, 3);
-	
-	// Set menu title
-	if (game -> isDemo() || !game -> isRunning())
-	{
-		menu -> setTitle( "Main Menu" );
-	}
-	else
-	{
-		menu -> setTitle( "Pause" );
-	}
-	
-	// Build each menu item
-	// MenuItem(Menu* menu, double x, double y, double width, double height, string text, function<void ()> callback = [](){});
-	
-	// Continue/start game item(s)
-	if (game -> isDemo() || !game -> isRunning())
-	{
-		// Single player game
-		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Solo Game");
-		item -> setAction([](){
-			Pong::getInstance() -> getGame() -> quitGame();
-			Pong::getInstance() -> getGame() -> startGame(true, false);
-			Pong::getInstance() -> closeMenu();
-		});
-		menu -> addItem(item);
-		item_y -= item_h + item_m;
-		
-		// Multiplayer game
-		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Versus Game");
-		item -> setAction([](){
-			Pong::getInstance() -> getGame() -> quitGame();
-			Pong::getInstance() -> getGame() -> startGame(false, false);
-			Pong::getInstance() -> closeMenu();
-		});
-		menu -> addItem(item);
-		item_y -= item_h + item_m;
-	}
-	else
-	{
-		// Continue
-		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Continue");
-		item -> setAction([](){
-			Pong::getInstance() -> getGame() -> resumeGame();
-			Pong::getInstance() -> closeMenu();
-		});
-		menu -> addItem(item);
-		item_y -= item_h + item_m;
-
-		// Quit Game
-		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Quit Game");
-		item -> setAction([](){
-			Pong::getInstance() -> getGame() -> quitGame();
-			Pong::getInstance() -> getGame() -> startGame(true, true);
-			Pong::getInstance() -> closeMenu();
-		});
-		menu -> addItem(item);
-		item_y -= item_h + item_m;
-	}
-	
-	// Quit Pong
-	item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Quit Pong");
-	item -> setAction([](){
-		exit(0);
-	});
-	menu -> addItem(item);
-	item_y -= item_h + item_m;
-	
 }
 
 /*******************************************************************************

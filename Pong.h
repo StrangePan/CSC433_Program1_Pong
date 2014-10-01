@@ -48,11 +48,6 @@ class Pong
 		PongGame* game;			/*!< Pointer to instance of the game manager */
 		map<int, list<Drawable*>> drawables;	/*!< list of objects to draw*/
 		
-		/*!
-		 * @brief Builds and displays the game menu
-		 */
-		void displayMenu();
-		
 	public:
 		static const int unit;	/*!< Unit of measurement used in calculations */
 
@@ -129,6 +124,11 @@ class Pong
 		 *  @brief accesses the menu entity
 		 */
 		Menu* getMenu();
+		
+		/*!
+		 * @brief Builds and displays the game menu
+		 */
+		void displayMenu();
 		
 		/*!
 		 * @brief Closes any currently open menus
