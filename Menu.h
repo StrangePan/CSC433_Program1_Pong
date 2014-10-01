@@ -1,7 +1,7 @@
 /***************************************************************************//**
- * @file File containing the declaration for the MenuItem class.
+ * @file File containing the declaration for the Menu class.
  *
- * @brief Contains the declaration for the Drawable class.
+ * @brief Contains the declaration for the Menu class.
 *******************************************************************************/
 
 #ifndef _MENU_H_
@@ -9,6 +9,9 @@
 
 class Menu;
 
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 #include <string>
 #include <list>
 #include "Drawable.h"
@@ -18,6 +21,11 @@ class Menu;
 
 using namespace std;
 
+/***************************************************************************//**
+ * @brief The M Class Holds all the information to draw a ball for Pong
+ *
+ * @details The Ball holds information for its position, speed, and size
+*******************************************************************************/
 class Menu : public Drawable
 {
 private:
