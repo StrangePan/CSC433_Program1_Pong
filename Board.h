@@ -1,15 +1,26 @@
+/***************************************************************************//**
+ * @file File containing the declaration for the Board class.
+ *
+ * @brief Contains the declaration for the Board class.
+*******************************************************************************/
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
+class Board;
+
 #include <string>
 #include "Drawable.h"
+
 using namespace std;
 
-/*! 
+/***************************************************************************//**
  * @brief The Board class takes care of all the parts of the board. It
  *		provides the backround for the pong game as well as the score.
  *		It also states the end text when a side has reached 10 points
- */ 
+*******************************************************************************/
 class Board : public Drawable
 {
 	private:

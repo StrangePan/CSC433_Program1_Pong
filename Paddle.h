@@ -1,19 +1,26 @@
+/***************************************************************************//**
+ * @file File containing the declaration for the Paddle class.
+ *
+ * @brief Contains the declaration for the Paddle class.
+*******************************************************************************/
 #ifndef _PADDLE_H_
 #define _PADDLE_H_
 
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 class Paddle;
 
 #include "Drawable.h"
 #include "Steppable.h"
 #include "PongGame.h"
 
-/*! 
+/****************************************************************************//* 
  * @brief The Paddle class holds all the information for the paddle in Pong
  *
  * @details It keeps track of the location of the paddle, the size of the
  * paddle, and the max speed of the paddle.
- *
- */ 
+*******************************************************************************/ 
 class Paddle : public Drawable, public Steppable
 {
 	private:

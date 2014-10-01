@@ -116,7 +116,7 @@ void PongText::draw_char(char c, double x, double y, double size)
 		case 'B':
 			glRectd( x, y, x + u, y - s );
 			glRectd( x + u * 3, y, x + u * 4, y - u * 3 );
-			glRectd( x + u * 4, y - u * 4, x + u * 4, y - s );
+			glRectd( x + u * 3, y - u * 4, x + u * 4, y - s );
 			glRectd( x + u, y, x + u * 3, y - u );
 			glRectd( x + u, y - u * 3, x + u * 3, y - u * 4 );
 			glRectd( x + u, y - s + u, x + u * 3, y - s );
@@ -150,7 +150,7 @@ void PongText::draw_char(char c, double x, double y, double size)
 
 		case 'G':
 			glRectd( x, y, x + u, y - s );
-			glRectd( x + u * 4, y - u * 3, x + u * 4, y - s );
+			glRectd( x + u * 3, y - u * 3, x + u * 4, y - s );
 			glRectd( x + u, y, x + u * 4, y - u );
 			glRectd( x + u * 2, y - u * 3, x + u * 3, y - u * 4 );
 			glRectd( x + u, y - s + u, x + u * 3, y - s );
@@ -221,7 +221,7 @@ void PongText::draw_char(char c, double x, double y, double size)
 		case 'R':
 			glRectd( x, y, x + u, y - s );
 			glRectd( x + u * 3, y, x + u * 4, y - u * 3 );
-			glRectd( x + u * 4, y - u * 4, x + u * 4, y - s );
+			glRectd( x + u * 3, y - u * 4, x + u * 4, y - s );
 			glRectd( x + u, y, x + u * 3, y - u );
 			glRectd( x + u, y - u * 3, x + u * 3, y - u * 4 );
 			break;

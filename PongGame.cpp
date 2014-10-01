@@ -232,6 +232,21 @@ void PongGame::quitGame()
 	right_controller = NULL;
 	left_controller = NULL;
 	ball = NULL;
+
+	if (left_paddle != NULL)
+	{
+		left_paddle -> up = false;
+		left_paddle -> left = false;
+		left_paddle -> right = false;
+		left_paddle -> down = false;
+	}
+	if (right_paddle != NULL)
+	{
+		right_paddle -> up = false;
+		right_paddle -> left = false;
+		right_paddle -> right = false;
+		right_paddle -> down = false;
+	}
 }
 
 /***************************************************************************//**

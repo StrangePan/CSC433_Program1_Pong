@@ -60,7 +60,7 @@ void Ball::step( )
 							- game->getRightPaddle()->getWidth()/2;
 		double right_bound = game->getRightPaddle()->getX()
 							- game->getRightPaddle()->getWidth()/2
-							+ x_velocity * s_velocity;
+							+ x_velocity * s_velocity + 1;
 		double top_bound = game->getRightPaddle()->getY()
 							+ game->getRightPaddle()->getHeight() / 2;
 		double bot_bound = game->getRightPaddle()->getY()
@@ -81,8 +81,8 @@ void Ball::step( )
 					/ (game->getRightPaddle()->getHeight() / 12.0);
 
 			// Govern y_velocity speed, lest we lose the ball!
-			if (y_velocity > 10.0) y_velocity = 10.0;
-			if (y_velocity < -10.0) y_velocity = -10.0;
+			if (y_velocity > 8.0) y_velocity = 8.0;
+			if (y_velocity < -8.0) y_velocity = -8.0;
 
 			// Let game know that a collision has happened
 			game->ballHit(true);
@@ -99,7 +99,7 @@ void Ball::step( )
 	{
 		double left_bound = game->getLeftPaddle()->getX()
 							+ game->getLeftPaddle()->getWidth()/2
-							+ x_velocity * s_velocity;
+							+ x_velocity * s_velocity - 1;
 		double right_bound = game->getLeftPaddle()->getX()
 							+ game->getLeftPaddle()->getWidth() / 2;
 		double top_bound = game->getLeftPaddle()->getY()
@@ -122,8 +122,8 @@ void Ball::step( )
 				/ (game->getLeftPaddle()->getHeight() / 12.0);
 
 			// Govern y_velocity speed, lest we lose the ball!
-			if (y_velocity > 10.0) y_velocity = 10.0;
-			if (y_velocity < -10.0) y_velocity = -10.0;
+			if (y_velocity > 8.0) y_velocity = 8.0;
+			if (y_velocity < -8.0) y_velocity = -8.0;
 
 			// Let game know that a collision has happened
 			game->ballHit(false);
