@@ -1,3 +1,8 @@
+/***************************************************************************//**
+ * @file File containing the declaration for the MenuItem class.
+ *
+ * @brief Contains the declaration for the MenuItem class.
+*******************************************************************************/
 #ifndef _MENUITEM_H_
 #define _MENUTEM_H_
 

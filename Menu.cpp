@@ -1,3 +1,9 @@
+/***************************************************************************//**
+ * @file File containing the declaration for the Drawable class.
+ *
+ * @brief Contains the declaration for the Drawable class.
+*******************************************************************************/
+
 #include "Menu.h"
 
 void Menu::draw()

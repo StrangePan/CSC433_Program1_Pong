@@ -1,3 +1,9 @@
+/***************************************************************************//**
+ * @file File containing the declaration for the MenuItem class.
+ *
+ * @brief Contains the declaration for the Drawable class.
+*******************************************************************************/
+
 #ifndef _MENU_H_
 #define _MENU_H_
 
