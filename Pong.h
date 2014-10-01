@@ -20,6 +20,7 @@ class Pong;
 #include <time.h>
 #include "PongGame.h"
 #include "Drawable.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -42,10 +43,16 @@ class Pong
 		int window_width;		/*!< Width of gui window */
 		int window_height;		/*!< Height of gui window */
 		string window_name;		/*!< The Name of the Gui window */
+		Menu* menu;				/*!< Menu object */
 		
 		PongGame* game;			/*!< Pointer to instance of the game manager */
 		map<int, list<Drawable*>> drawables;	/*!< list of objects to draw*/
-
+		
+		/*!
+		 * @brief Builds and displays the game menu
+		 */
+		void displayMenu();
+		
 	public:
 		static const int unit;	/*!< Unit of measurement used in calculations */
 
@@ -117,6 +124,16 @@ class Pong
 		 * @brief Gets the height of the view port in the virtual space.
 		 */
 		int getViewHeight();
+		
+		/*!
+		 *  @brief accesses the menu entity
+		 */
+		Menu* getMenu();
+		
+		/*!
+		 * @brief Closes any currently open menus
+		 */
+		void closeMenu();
 		
 		/*!
 		 * @brief Drawing callback. Executes every glut display callaback. Also
