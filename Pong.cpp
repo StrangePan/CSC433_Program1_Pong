@@ -444,6 +444,7 @@ void Pong::mouseclick(int button, int state, int x, int y)
     switch ( button )
     {
         case GLUT_LEFT_BUTTON:		// left button
+			game -> getMenu() -> menuItemClicked( x, y );
             break;
 
 		case GLUT_RIGHT_BUTTON:		// right button

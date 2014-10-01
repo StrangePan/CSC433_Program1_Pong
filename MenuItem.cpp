@@ -21,3 +21,8 @@ void MenuItem::setText( string new_text )
 {
 	text.setText( new_text );
 }
+
+void MenuItem::getClicked()
+{
+
+}

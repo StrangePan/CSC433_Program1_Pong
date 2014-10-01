@@ -386,6 +386,18 @@ Ball* PongGame::getBall()
 }
 
 /***************************************************************************//**
+ * @author Johnny Ackerman
+ * 
+ * @par Description: Gets a pointer to game Menu object.
+ *
+ * @returns Pointer to the Menu object.
+*******************************************************************************/
+Menu* PongGame::getMenu()
+{
+	return menu;
+}
+
+/***************************************************************************//**
  * @author Daniel Andrus
  * 
  * @par Description: Checks whether the game is currently paused.

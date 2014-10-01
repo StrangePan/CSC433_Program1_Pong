@@ -21,3 +21,8 @@ void Menu::setTitle( string new_title )
 {
 	title.setText( new_title );
 }
+
+void Menu::menuItemClicked( int clicked_x, int clicked_y)
+{
+
+}

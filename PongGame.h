@@ -22,6 +22,7 @@ class PongGame;
 #include "AIController.h"
 #include "PlayerController.h"
 #include "PaddleController.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -52,7 +53,8 @@ class PongGame : public Steppable
 		Board* board;	/*!< instance of the board class */
 		Paddle* left_paddle;	/*!< instance of paddle on the left side */
 		Paddle* right_paddle;	/*!< right instance of paddle */
-		Ball* ball;	/*!< Stores the comment */
+		Ball* ball;	/*!< ball object */
+		Menu* menu; /*!< Menu object */
 
 		PaddleController* left_controller;	/*!< the object that controls the
 												left paddle*/
@@ -190,6 +192,11 @@ class PongGame : public Steppable
 		 *  @brief accesses the ball entity
 		 */
 		Ball* getBall();
+
+		/*!
+		 *  @brief accesses the menu entity
+		 */
+		Menu* getMenu();
 
 
 		/*!
