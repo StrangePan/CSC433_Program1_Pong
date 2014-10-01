@@ -69,7 +69,7 @@ public:
 	/*!
 	*  @brief The location and button pressed by the mouse
 	*/
-	void click( int button, int state, int x, int y );
+	bool click( int button, int state, int x, int y );
 
 	/*!
 	*  @brief draws the menu item

@@ -45,7 +45,7 @@ MenuItem::MenuItem(Menu* menu, double x, double y, double width,double height,
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * sets the bottom left coordinates of the function
+ * sets the bottom left coordinates of the MenuItem
  * 
  * 
  * @param[in]      double x - left most x coordinant
@@ -63,11 +63,11 @@ void MenuItem::setPosition( double x, double y )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * sets the bottom left coordinates of the function
+ * sets the total width and height of the menu item
  * 
  * 
- * @param[in]      double x - left most x coordinant
- * @param[in]      double y - bottom most y coordinant
+ * @param[in]      double width - width of menuItem
+ * @param[in]      double height - height of menuItem
  *****************************************************************************/
 void MenuItem::setSize( double width, double height )
 {
@@ -81,13 +81,10 @@ void MenuItem::setSize( double width, double height )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * calls the PongText library to set the menuitem text
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      string text - the new text to be displayed
  *****************************************************************************/
 void MenuItem::setText( string text )
 {
@@ -98,13 +95,10 @@ void MenuItem::setText( string text )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * Sets the action of a given menuItem
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * @param[in]      function<void ()> callback - the given action function
  *****************************************************************************/
 void MenuItem::setAction( function<void ()> callback )
 {
@@ -115,36 +109,36 @@ void MenuItem::setAction( function<void ()> callback )
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * calls action if mouse clicked given menuItem
  * 
  * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
+ * @param[in]      int button - which mouse button was pressed
+ * @param[in]      int state - if the button is down or not
+ * @param[in]      int x - x coordinant of button press
+ * @param[in]      int y - y coordinant of button press
  * 
- * @returns 0 program ran successfully.
+ * @returns true - if action was called
+ * @returns false - if action was not called
  *****************************************************************************/
-void MenuItem::click( int button, int state, int x, int y )
+bool MenuItem::click( int button, int state, int x, int y )
 {
+	//checks if item was clicked
 	if ( x >= this -> x && x <= this -> x + width && y >= this -> y && y <= this -> y + height )
 	{
 		if (state == GLUT_LEFT_BUTTON)
 		{
-			callback();
+			callback(); //calls given action
+			return true;
 		}
 	}
+	return false; //this item was not clicked
 }
 
 /**************************************************************************//**
  * @author Daniel Andrus,Johnny Ackerman
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
- * 
- * 
- * @param[in]      argc - Number of aurments from the command line
- * @param[out]     argv - An array of command line aurgments
- * 
- * @returns 0 program ran successfully.
+ * Draw the menuButton onto the menu
  *****************************************************************************/
 void MenuItem::draw()
 {

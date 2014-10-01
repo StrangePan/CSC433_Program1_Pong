@@ -159,7 +159,7 @@ void Menu::click( int button, int state, int x, int y )
 {
 	for (MenuItem* item : items)
 	{
-		item -> click(button, state, x, y);
+		if (item -> click(button, state, x, y)) return;
 	}
 }
 
