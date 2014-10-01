@@ -29,7 +29,7 @@ using namespace std;
 class MenuItem : public Drawable
 {
 private:
-	Menu* menu;	/*!< istance of the menu that this item is on */
+	Menu* menu;	/*!< instance of the menu that this item is on */
 	double x;	/*!< bottom left x coordinant of item */
 	double y;	/*!< bottom left y coordinant of item */
 	double width;	/*!< width of menu item with border */
@@ -43,7 +43,7 @@ public:
 	*  @brief The constructor, creates a menu item with location, size, text, 
 				and	action
 	*/
-	MenuItem(Menu* menu, double x, double y, double width, double height, string text, function<void ()> callback = [](){});
+	MenuItem(Menu* menu, double x, double y, double width, double height, double border, string text, function<void ()> callback = [](){});
 	
 
 	/*!
