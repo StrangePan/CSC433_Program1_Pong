@@ -1,5 +1,22 @@
+/***************************************************************************//**
+ * @file File containing the implementation of the PongText class.
+ *
+ * @brief Contains the implementation for the PongText class.
+*******************************************************************************/
+
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 #include "PongText.h"
 
+/*******************************************************************************
+ *                          FUNCTION DEFINITIONS
+*******************************************************************************/
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: The constructor. Initializes variables and classes.
+*******************************************************************************/
 PongText::PongText(double x, double y, double size, string text, int align) :
 		x(x), y(y), size(size), text(text), align(align)
 {
@@ -8,41 +25,95 @@ PongText::PongText(double x, double y, double size, string text, int align) :
 	calc_size();
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: The destructor. Frees up dynamic memory.
+*******************************************************************************/
 PongText::~PongText()
 { }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Function to change the displaye text.
+ *
+ * @param[in]	text - The new text to display.
+*******************************************************************************/
 void PongText::setText(string text)
 {
 	this -> text = text;
 	calc_size();
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Changes the position of text
+ *
+ * @param[in]	x - New x coordinate
+ * @param[in]	y - New y coordinate
+*******************************************************************************/
 void PongText::setPosition(double x, double y)
 {
 	this -> x = x;
 	this -> y = y;
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Changes the hight of each individual letter
+ *
+ * @param[in]	size - New height in pixels of the text
+*******************************************************************************/
 void PongText::setSize(double size)
 {
 	this -> size = size;
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Changes the alignment of text
+ *
+ * @param[in]	align - Sets the alignment of the text. 1 is left align, 0
+ *		is center, -1 is right align
+*******************************************************************************/
 void PongText::setAlignment(int align)
 {
 	this -> align = ( align < 0 ? -1 : align > 0 ? 1 : 0 );
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Gets the width of the text
+ *
+ * @returns The width in pixels
+*******************************************************************************/
 double PongText::getWidth()
 {
 	return size / 8 * width;
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Gets the height of the text
+ *
+ * @returns The height in pixels
+*******************************************************************************/
 double PongText::getHeight()
 {
 	return size * 10 / 8 * height;
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Draws the text
+*******************************************************************************/
 void PongText::draw()
 {
 	double x;
@@ -97,6 +168,13 @@ void PongText::draw()
 	}
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Gets the width of a single character
+ *
+ * @returns The width in units of the individual character
+*******************************************************************************/
 int PongText::char_width(char c)
 {
 	switch (toupper(c))
@@ -172,11 +250,23 @@ int PongText::char_width(char c)
 	}
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Gets the height of a single character
+ *
+ * @returns The height of the character
+*******************************************************************************/
 int PongText::char_height(char c)
 {
 	return 8;
 }
 
+/***************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: Calculates the size of the text field
+*******************************************************************************/
 void PongText::calc_size()
 {
 	int w = 0;
