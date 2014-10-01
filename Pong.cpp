@@ -22,7 +22,7 @@ const int Pong::unit = 16;
 *******************************************************************************/
 Pong::Pong() :
 	view_width(32*unit), view_height(24*unit), window_width(view_width),
-	window_height(view_height), window_name("Pong")
+	window_height(view_height), window_name("Pong"), menu(NULL)
 {
 	if (instance == NULL)
 		instance = this;
@@ -40,6 +40,8 @@ Pong::~Pong()
 {
 	// Be sure to deallocate everything!
 	delete game;
+	if (menu != NULL)
+		delete menu;
 }
 
 /***************************************************************************//**
@@ -82,6 +84,7 @@ int Pong::run( int argc, char *argv[] )
 
 	// Start the game
 	game->startGame(true, true);
+	displayMenu();
 
 	// perform various OpenGL initializations
     glutInit( &argc, argv );
@@ -97,6 +100,8 @@ int Pong::run( int argc, char *argv[] )
 
 	// Initialize glut with 32-bit graphics, double buffering, and anti-aliasing
     glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_MULTISAMPLE );
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Set up the program window
     glutInitWindowSize( view_width, view_height);    // initial window size
@@ -257,6 +262,32 @@ int Pong::getViewHeight()
 }
 
 /***************************************************************************//**
+ * @author Johnny Ackerman
+ * 
+ * @par Description: Gets a pointer to game Menu object.
+ *
+ * @returns Pointer to the Menu object.
+*******************************************************************************/
+Menu* Pong::getMenu()
+{
+	return menu;
+}
+
+void Pong::closeMenu()
+{
+	if (game -> isRunning() && !game -> isDemo() && game -> isPaused())
+	{
+		game -> resumeGame();
+	}
+	if (menu != NULL)
+	{
+		stopDrawingObject(menu);
+		delete menu;
+		menu = NULL;
+	}
+}
+
+/***************************************************************************//**
  * @author Daniel Andrus, Johnny Ackerman
  * 
  * @par Description: Drawing callback. Executes every glut display callaback.
@@ -345,19 +376,21 @@ void Pong::keyDown(unsigned char key, int x, int y)
     {
         case 27:		// Escape
 			game -> quitGame();
+			closeMenu();
             exit( 0 );
             break;
 
 		case 32:		// Space
-			if ( game -> isRunning() )
+			if ( game -> isRunning() && !game -> isDemo() )
 			{
 				if ( game -> isPaused() )
 				{
-					game -> resumeGame();
+					closeMenu();
 				}
 				else
 				{
 					game -> pauseGame();
+					displayMenu();
 				}
 			}
 			else
@@ -367,7 +400,7 @@ void Pong::keyDown(unsigned char key, int x, int y)
 			break;
 
         default:		// Everything else, forward to game manager
-			game->keyDownEvent(key);
+			game -> keyDownEvent(key);
             break;
     }
 }
@@ -444,7 +477,7 @@ void Pong::mouseclick(int button, int state, int x, int y)
     switch ( button )
     {
         case GLUT_LEFT_BUTTON:		// left button
-			game -> getMenu() -> menuItemClicked( x, y );
+			if (menu != NULL) menu -> click( button, state, x, y );
             break;
 
 		case GLUT_RIGHT_BUTTON:		// right button
@@ -464,6 +497,81 @@ void Pong::mouseclick(int button, int state, int x, int y)
 void Pong::step()
 {
 	game->step();
+}
+
+void Pong::displayMenu()
+{
+	// Set up the variables
+	MenuItem* item;
+	double item_x = view_width / 2 - unit * 9;
+	double item_y = view_height / 2 + unit * 5;
+	double item_w = unit * 18;	// width
+	double item_h = unit * 3;	// height
+	double item_b = unit / 2;	// border
+	double item_p = unit / 2;	// padding
+	double item_m = unit / 2;	// margin
+	
+	// Build menu
+	menu = new (nothrow) Menu(0, 0, 0, 0, 0, "");
+	menu -> setSize( unit * 20, unit * 20 );
+	menu -> setPosition( view_width / 2 - unit * 10, view_height / 2 - unit * 10 );
+	drawObject(menu, 3);
+	
+	// Set menu title
+	if (game -> isDemo() || !game -> isRunning())
+	{
+		menu -> setTitle( "Main Menu" );
+	}
+	else
+	{
+		menu -> setTitle( "Pause" );
+	}
+	
+	// Build each menu item
+	// MenuItem(Menu* menu, double x, double y, double width, double height, string text, function<void ()> callback = [](){});
+	
+	// Continue/start game item(s)
+	if (game -> isDemo() || !game -> isRunning())
+	{
+		// Single player game
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Solo Game");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> startGame(true, false);
+			Pong::getInstance() -> closeMenu();
+		});
+		menu -> addItem(item);
+		item_y += item_h + item_m;
+		
+		// Multiplayer game
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Versus Game");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> startGame(false, false);
+			Pong::getInstance() -> closeMenu();
+		});
+		menu -> addItem(item);
+		item_y += item_h + item_m;
+	}
+	else
+	{
+		// Continue
+		item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "New Solo Game");
+		item -> setAction([](){
+			Pong::getInstance() -> getGame() -> resumeGame();
+			Pong::getInstance() -> closeMenu();
+		});
+		menu -> addItem(item);
+		item_y += item_h + item_m;
+	}
+	
+	// Quit Pong
+	item = new (nothrow) MenuItem(menu, item_x, item_y, item_w, item_h, item_b, "Quit Pong");
+	item -> setAction([](){
+		delete Pong::getInstance();
+		exit(0);
+	});
+	menu -> addItem(item);
+	item_y += item_h + item_m;
+	
 }
 
 /*******************************************************************************
