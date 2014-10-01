@@ -1,5 +1,26 @@
+/***************************************************************************//**
+ * @file File containing the implementation for the PongText class.
+ *
+ * @brief Contains the implementation for the PongText class.
+*******************************************************************************/
+
+/*******************************************************************************
+ *                 DECLARATIONS, INCLUDES, AND NAMESPACES
+*******************************************************************************/
 #include "PongText.h"
 
+/**************************************************************************//**
+ * @author Daniel Andrus
+ * 
+ * @par Description: 
+ * draws a single charactor in a blocky formate
+ * 
+ * 
+ * @param[in]      char c - the charactor being drawn
+ * @param[in]      double x - x coordinant of charactor
+ * @param[in]      double y - y coordinant of charactor
+ * @param[in]      double size - size of charactor
+ *****************************************************************************/
 void PongText::draw_char(char c, double x, double y, double size)
 {
 	const double u = size / 8;	// Unitary size

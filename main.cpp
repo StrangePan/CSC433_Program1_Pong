@@ -30,6 +30,11 @@
  *
  * Glut and open GL are the libraries used for gui management.
  *
+ * EXTRA FEATURES ----- Added Menu, Added AI, Single player, Ball trail,
+ *		restartable after a game has been played, paddles move extra
+ *		smoothly, Absolutely everything is scalable, added blocky 
+ *		letters for menu, AI's play behind Menu upon game start.
+ *
  * @section compile_section Compiling and Usage
  *
  * @par Compiling Instructions: 
@@ -53,7 +58,7 @@
  *
  * @section todo_bugs_modification_section Todo, Bugs, and Modifications
  * 
- * @todo add a menu
+ * @bugs	Rarely - ball will go through a paddle thats moving forward
  * 
  * @par Modifications and Development Timeline: 
    @verbatim 
@@ -72,6 +77,7 @@
    09-26-2014	Clean ups and improvements.
    09-29-2014	Added compatability with Linux.
    09-30-2014	Added adjustable ball speeds & changed bouncing physics
+   09-30-2014	man clean ups, added menu, died with doxygen
    @endverbatim
  *
  *****************************************************************************/
@@ -85,7 +91,7 @@
  * @author Daniel Andrus
  * 
  * @par Description: 
- * This function priamarly passes control to the Pong class.
+ * This function primarly passes control to the Pong class.
  * 
  * 
  * @param[in]      argc - Number of aurments from the command line
