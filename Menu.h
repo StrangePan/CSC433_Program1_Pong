@@ -26,16 +26,21 @@ private:
 	double width;
 	double height;
 	double border;
-
 	list<MenuItem*> items;
 	PongText title;
 
 public:
+	Menu(double x, double y, double width, double height, double border, string title);
+	~Menu();
+	
+	void setPosition( double x, double y );
+	void setSize( double width, double height );
+	void setTitle( string title );
+	void addItem( MenuItem* item );
+	void setBorder( double border );
+	void click( int button, int state, int x, int y );
 	void draw();
-	void setPosition( double new_x, double new_y );
-	void setTitle( string new_title );
-	void menuItemClicked( int clicked_x, int clicked_y);
-
+	void clear();
 };
 
 #endif
