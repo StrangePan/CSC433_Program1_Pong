@@ -22,7 +22,8 @@ const int Pong::unit = 16;
 *******************************************************************************/
 Pong::Pong() :
 	view_width(32*unit), view_height(24*unit), window_width(view_width),
-	window_height(view_height), window_name("Pong"), menu(NULL)
+	window_height(view_height), window_name("Pong"), menu(NULL), view_x(0),
+	view_y(0)
 {
 	if (instance == NULL)
 		instance = this;
@@ -437,18 +438,26 @@ void Pong::reshape(int w, int h)
 	if (w > h * ratio)					// Adjust viewport based on ratio
 	{
 		scale = (double) h / (double) view_height;
+		this -> scale = scale;
 		gluOrtho2D( 0 - ((w / scale) - view_width) / 2,
 			view_width + ((w / scale) - view_width) / 2,
 			0,
 			view_height );
+		
+		view_x = (w / scale - view_width) / 2;
+		view_y = 0;
 	}
 	else
 	{
 		scale = (double) w / (double) view_width;
+		this -> scale = scale;
 		gluOrtho2D( 0,
 			view_width,
 			0 - ((h / scale) - view_height) / 2,
 			view_height + ((h / scale) - view_height) / 2 );
+
+		view_x = 0;
+		view_y = (h / scale - view_height) / 2;
 	}
     glViewport( 0, 0, w, h );			// Adjust viewport to new window
 
@@ -572,7 +581,14 @@ void Pong::keySpecialUp(int key, int x, int y)
 void Pong::mouseclick(int button, int state, int x, int y)
 {
 	// Correct for coordinate system
-    y = view_height - y;
+    y = window_height - y;
+
+	// Correct for scaling
+	x /= scale;
+	y /= scale;
+
+	x -= view_x;
+	y -= view_y;
 
     switch ( button )
     {

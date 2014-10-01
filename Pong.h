@@ -42,6 +42,9 @@ class Pong
 		int view_height;		/*!< The height of the drawable region */
 		int window_width;		/*!< Width of gui window */
 		int window_height;		/*!< Height of gui window */
+		double scale;
+		int view_x;
+		int view_y;
 		string window_name;		/*!< The Name of the Gui window */
 		Menu* menu;				/*!< Menu object */
 		
