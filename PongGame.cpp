@@ -265,29 +265,35 @@ void PongGame::clear()
 	{
 		Pong::getInstance()->stopDrawingObject(board);
 		delete board;
+		board = NULL;
 	}
 	if (left_paddle != NULL)
 	{
 		Pong::getInstance()->stopDrawingObject(left_paddle);
 		delete left_paddle;
+		left_paddle = NULL;
 	}
 	if (right_paddle != NULL)
 	{
 		Pong::getInstance()->stopDrawingObject(right_paddle);
 		delete right_paddle;
+		right_paddle = NULL;
 	}
 	if (ball != NULL)
 	{
 		Pong::getInstance()->stopDrawingObject(ball);
 		delete ball;
+		ball = NULL;
 	}
 	if (left_controller != NULL)
 	{
 		delete left_controller;
+		left_controller = NULL;
 	}
 	if (right_controller != NULL)
 	{
 		delete right_controller;
+		right_controller = NULL;
 	}
 }
 
